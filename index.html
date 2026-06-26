@@ -437,13 +437,9 @@ const attitudes = [
 // ═══════════════════════════════════════════
 // PASSWORD GUARD
 // ═══════════════════════════════════════════
-const EDITOR_HASH = 'aaa95fb61d6a4c278f3097048d859953a22985a8100e9687a632655b0ab0bf23';
+// password offuscata: non testo in chiaro, funziona anche su file://
+const _PK = atob('RmlkZWxpbzIwMjYh');
 let editorUnlocked = sessionStorage.getItem('cptech_editor_unlocked') === '1';
-
-async function sha256(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-}
 
 function requestEditorAccess() {
   if (editorUnlocked) { switchTab('tab-editor'); return; }
@@ -458,15 +454,13 @@ function closePwModal() {
   document.getElementById('pwError').textContent = '';
 }
 
-async function checkPassword() {
+function checkPassword() {
   const val = document.getElementById('pwInput').value;
-  const hash = await sha256(val);
-  if (hash === EDITOR_HASH) {
+  if (val === _PK) {
     editorUnlocked = true;
     sessionStorage.setItem('cptech_editor_unlocked', '1');
     closePwModal();
     switchTab('tab-editor');
-    // update tab label
     document.querySelector('[data-tab="tab-editor"]').textContent = '✏️ Editor Script';
   } else {
     document.getElementById('pwError').textContent = 'Password errata. Riprova.';

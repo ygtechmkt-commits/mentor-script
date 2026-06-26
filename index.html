@@ -10,15 +10,28 @@
   --text:#eef6ff;--muted:#9fb2c8;--line:rgba(255,255,255,.12);
   --accent:#29d3ff;--green:#54ffa8;--danger:#ff6b7a;--warn:#ffbe3a;
   --radius:22px;--scriptSize:24px;--scriptLine:1.52;--scriptPad:28px;
-  --sideWidth:34%
+  --sideWidth:34%;
+  --bodyBg:radial-gradient(circle at top left,#123456 0,#07111f 40%,#040914 100%);
+  --topbarBg:rgba(13,27,46,.84);--panelBg:rgba(13,27,46,.88);
+  --boxBg:rgba(255,255,255,.045);--inputBg:#071523;--smallBtnBg:#10243b;
+  --smallBtnHover:#1b3a60;--nameMiniBg:#0b1b2e;--toolBtnBg:#11233a;--toolBtnHover:#193354
+}
+body.light{
+  --bg:#f0f4f8;--panel:#ffffff;--panel2:#f7f9fb;
+  --text:#0f1e2e;--muted:#5a7590;--line:rgba(0,0,0,.11);
+  --bodyBg:linear-gradient(135deg,#dbeeff 0,#f0f4f8 60%,#e8f0f8 100%);
+  --topbarBg:rgba(255,255,255,.92);--panelBg:rgba(255,255,255,.97);
+  --boxBg:rgba(0,0,0,.04);--inputBg:#f5f8fb;--smallBtnBg:#e8f0f8;
+  --smallBtnHover:#d0e0f0;--nameMiniBg:#e8f0f8;--toolBtnBg:#e0eaf5;--toolBtnHover:#ccd9ec
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;width:100%;min-height:100%;font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at top left,#123456 0,#07111f 40%,#040914 100%);color:var(--text)}
+html,body{margin:0;padding:0;width:100%;min-height:100%;font-family:Inter,Arial,sans-serif;background:var(--bodyBg);color:var(--text);transition:background .3s,color .3s}
 button,input,textarea,select{font-family:inherit}
 .hidden{display:none!important}
 
 /* ── TABS HEADER ── */
 .tabsBar{position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:0;background:#050f1c;border-bottom:1px solid var(--line)}
+body.light .tabsBar{background:#fff}
 .tabBtn{border:0;background:transparent;color:var(--muted);padding:15px 22px;font-size:14px;font-weight:900;cursor:pointer;border-bottom:3px solid transparent;transition:.16s}
 .tabBtn:hover{color:var(--text)}
 .tabBtn.active{color:var(--accent);border-bottom-color:var(--accent)}
@@ -55,47 +68,59 @@ button,input,textarea,select{font-family:inherit}
 
 /* ── APP (chiamata) ── */
 .app{width:100%;min-height:calc(100vh - 49px);padding:16px;display:flex;flex-direction:column;gap:14px}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(13,27,46,.84);border:1px solid var(--line);border-radius:var(--radius);padding:13px 15px;backdrop-filter:blur(12px)}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--topbarBg);border:1px solid var(--line);border-radius:var(--radius);padding:13px 15px;backdrop-filter:blur(12px)}
 .brand{display:flex;align-items:center;gap:12px;min-width:220px}
 .logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#174bff);display:grid;place-items:center;font-weight:1000;color:#00111a;box-shadow:0 12px 34px rgba(41,211,255,.18)}
 .brand h1{font-size:18px;line-height:1.05;margin:0}
 .brand p{margin:3px 0 0;color:var(--muted);font-size:12px}
 .tools{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
-.nameMini{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#0b1b2e;border-radius:14px;padding:7px 9px}
 .nameMini span{font-size:12px;font-weight:900;color:var(--muted)}
-.nameMini input{width:125px;background:#071523;border:1px solid rgba(255,255,255,.12);border-radius:10px;color:var(--text);padding:8px 9px;font-size:14px;font-weight:900;outline:none}
-.toolBtn{border:1px solid var(--line);background:#11233a;color:var(--text);padding:10px 12px;border-radius:13px;font-size:14px;font-weight:900;cursor:pointer;transition:.18s ease}
-.toolBtn:hover{transform:translateY(-1px);background:#193354}
 .toolBtn.active{background:linear-gradient(135deg,#1bd384,#29d3ff);color:#03111c;border-color:transparent}
 .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,var(--sideWidth));gap:14px;align-items:stretch;min-height:calc(100vh - 200px)}
-.panel{background:rgba(13,27,46,.88);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 20px 60px rgba(0,0,0,.24);overflow:hidden}
+.panel{background:var(--panelBg);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 20px 60px rgba(0,0,0,.24);overflow:hidden}
 .scriptPanel{display:flex;flex-direction:column}
+.scriptBody{padding:var(--scriptPad);overflow:auto}
+.scriptResizeHandle{height:8px;cursor:ns-resize;background:linear-gradient(180deg,transparent,rgba(41,211,255,.18),transparent);border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;user-select:none}
+.scriptResizeHandle::after{content:'· · ·';font-size:10px;color:var(--muted);letter-spacing:4px}
+.choicesArea{padding:14px 20px 20px;border-top:1px solid var(--line)}
+.choicesLabel{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent);font-weight:950;margin-bottom:10px}
 .nodeHeader{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.04),transparent)}
 .nodeHeader h2{margin:0;font-size:clamp(18px,2vw,27px);line-height:1.1;letter-spacing:-.3px}
 .badge{white-space:nowrap;border:1px solid rgba(41,211,255,.35);background:rgba(41,211,255,.10);color:#bff3ff;border-radius:999px;padding:8px 10px;font-size:12px;font-weight:950;letter-spacing:.5px}
-.scriptBody{padding:var(--scriptPad);flex:1;overflow:auto}
+/* .scriptBody defined after scriptPanel override */
 .label{font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--green);font-weight:950;margin-bottom:12px}
 .phrase{white-space:pre-wrap;font-size:var(--scriptSize);line-height:var(--scriptLine);font-weight:780;letter-spacing:-.25px;max-width:1120px}
 .side{padding:13px;display:flex;flex-direction:column;gap:12px;overflow:auto}
-.box{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:18px;padding:13px}
+.box{background:var(--boxBg);border:1px solid var(--line);border-radius:18px;padding:13px}
 .box h3{margin:0 0 11px;font-size:15px;color:#d9f2ff}
 .buttons{display:grid;gap:9px}
-.choice{width:100%;border:1px solid rgba(255,255,255,.13);background:linear-gradient(180deg,#18324f,#112741);color:var(--text);padding:15px 14px;border-radius:16px;font-size:17px;line-height:1.14;font-weight:950;text-align:left;cursor:pointer;box-shadow:0 10px 25px rgba(0,0,0,.16)}
-.choice:hover{background:linear-gradient(180deg,#244872,#153559);border-color:rgba(39,211,255,.5);transform:translateY(-1px)}
+/* colorful choice buttons – each nth gets a different gradient */
+.choice{width:100%;border:0;color:#03111c;padding:15px 16px;border-radius:16px;font-size:17px;line-height:1.14;font-weight:950;text-align:left;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.18);transition:.16s ease}
+.choice:nth-child(6n+1){background:linear-gradient(135deg,#29d3ff,#63e9ff)}
+.choice:nth-child(6n+2){background:linear-gradient(135deg,#54ffa8,#d8ff84)}
+.choice:nth-child(6n+3){background:linear-gradient(135deg,#ff9d4a,#ffd84a)}
+.choice:nth-child(6n+4){background:linear-gradient(135deg,#b96dff,#e26dff)}
+.choice:nth-child(6n+5){background:linear-gradient(135deg,#ff6b9a,#ffb3cc)}
+.choice:nth-child(6n+6){background:linear-gradient(135deg,#4af0c0,#84e9ff)}
+.choice:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 14px 32px rgba(0,0,0,.22)}
 .nav{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.smallBtn{border:1px solid var(--line);background:#10243b;color:var(--text);padding:11px 12px;border-radius:14px;font-weight:900;cursor:pointer}
-.smallBtn:hover{background:#1b3a60}
-textarea{width:100%;min-height:152px;background:#071321;border:1px solid rgba(255,255,255,.15);border-radius:15px;color:var(--text);padding:13px;font-size:15px;resize:vertical;outline:none}
+.smallBtn{border:1px solid var(--line);background:var(--smallBtnBg);color:var(--text);padding:11px 12px;border-radius:14px;font-weight:900;cursor:pointer}
+.smallBtn:hover{background:var(--smallBtnHover)}
+.nameMini{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--nameMiniBg);border-radius:14px;padding:7px 9px}
+.nameMini input{width:125px;background:var(--inputBg);border:1px solid rgba(255,255,255,.12);border-radius:10px;color:var(--text);padding:8px 9px;font-size:14px;font-weight:900;outline:none}
+.toolBtn{border:1px solid var(--line);background:var(--toolBtnBg);color:var(--text);padding:10px 12px;border-radius:13px;font-size:14px;font-weight:900;cursor:pointer;transition:.18s ease}
+.toolBtn:hover{transform:translateY(-1px);background:var(--toolBtnHover)}
+textarea{width:100%;min-height:152px;background:var(--inputBg);border:1px solid var(--line);border-radius:15px;color:var(--text);padding:13px;font-size:15px;resize:vertical;outline:none}
 textarea:focus{border-color:rgba(41,211,255,.85)}
 .noteActions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
 .saveStatus{color:var(--muted);font-size:12px;line-height:1.35;margin-top:8px}
 .path{display:flex;flex-wrap:wrap;gap:6px}
 .crumb{font-size:11px;color:#cbd9eb;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:999px;padding:6px 8px}
-.attitudePop{position:fixed;right:22px;bottom:22px;z-index:200;display:none;align-items:center;gap:13px;background:rgba(255,255,255,.96);color:#07111f;border-radius:24px;padding:16px 18px;box-shadow:0 25px 80px rgba(0,0,0,.35);animation:popIn .25s ease both;max-width:min(420px,calc(100vw - 28px))}
-.attitudePop .emoji{font-size:52px;line-height:1}
-.attitudePop .txt{font-size:18px;line-height:1.1;font-weight:950}
-.attitudePop .sub{font-size:13px;color:#3c4d63;margin-top:4px;font-weight:800}
-@keyframes popIn{from{transform:translateY(18px) scale(.92);opacity:0}to{transform:none;opacity:1}}
+.attitudeOverlay{position:fixed;inset:0;z-index:400;display:none;align-items:center;justify-content:center;background:rgba(4,9,20,.55);backdrop-filter:blur(6px)}
+.attitudePop{display:flex;flex-direction:column;align-items:center;gap:16px;background:#fff;color:#07111f;border-radius:28px;padding:40px 44px;box-shadow:0 32px 100px rgba(0,0,0,.45);animation:popIn .28s cubic-bezier(.22,1,.36,1) both;max-width:min(400px,calc(100vw - 32px));text-align:center}
+.attitudePop .emoji{font-size:72px;line-height:1}
+.attitudePop .txt{font-size:22px;line-height:1.25;font-weight:950;color:#0a1a2e}
+@keyframes popIn{from{transform:scale(.82);opacity:0}to{transform:none;opacity:1}}
 .emptyScript{text-align:center;padding:60px 20px;color:var(--muted)}
 .emptyScript .big{font-size:48px;margin-bottom:16px}
 .emptyScript p{font-size:18px}
@@ -253,6 +278,7 @@ body.compact textarea{min-height:105px}
         <button class="toolBtn" onclick="resetFont()">Reset</button>
         <button class="toolBtn" id="compactBtn" onclick="toggleCompact()">Compatta</button>
         <button class="toolBtn" id="attitudeBtn" onclick="toggleAttitude()">Atteggiamento OFF</button>
+        <button class="toolBtn" id="themeBtn" onclick="toggleTheme()">☀️ Chiaro</button>
         <button class="toolBtn" onclick="chooseMode()">← Indietro</button>
       </div>
     </header>
@@ -262,16 +288,17 @@ body.compact textarea{min-height:105px}
           <h2 id="nodeTitle"></h2>
           <div class="badge">FRASE DA DIRE</div>
         </div>
-        <div class="scriptBody">
+        <div class="scriptBody" id="scriptBody">
           <div class="label">Da leggere</div>
           <div class="phrase" id="phrase"></div>
         </div>
-      </main>
-      <aside class="panel side">
-        <div class="box">
-          <h3>Risposta / prossima azione</h3>
+        <div class="scriptResizeHandle" id="resizeHandle"></div>
+        <div class="choicesArea">
+          <div class="choicesLabel">Risposta / prossima azione</div>
           <div class="buttons" id="buttons"></div>
         </div>
+      </main>
+      <aside class="panel side">
         <div class="box">
           <h3>Navigazione</h3>
           <div class="nav">
@@ -363,11 +390,10 @@ BOTTONE: Altro bottone → altro-nodo
 </div><!-- /tab-editor -->
 
 <!-- Attitude popup -->
-<div class="attitudePop" id="attitudePop">
-  <div class="emoji" id="attEmoji">😄</div>
-  <div>
+<div class="attitudeOverlay" id="attitudeOverlay" onclick="hideAttitude()">
+  <div class="attitudePop" id="attitudePop">
+    <div class="emoji" id="attEmoji">😄</div>
     <div class="txt" id="attText">Sorridi, si sente al telefono.</div>
-    <div class="sub">Atteggiamento leggero e professionale.</div>
   </div>
 </div>
 
@@ -649,14 +675,50 @@ function clearNotes() { document.getElementById('notes').value = ''; LS.setStr('
 function toggleAttitude() { attitudeOn = !attitudeOn; LS.set('cptech_attitude', attitudeOn); updateAttitudeBtn(); attitudeOn ? startAttitude() : stopAttitude(); }
 function updateAttitudeBtn() { const b = document.getElementById('attitudeBtn'); b.textContent = attitudeOn ? 'Atteggiamento ON' : 'Atteggiamento OFF'; b.classList.toggle('active', attitudeOn); }
 function startAttitude() { stopAttitude(); attTimer = setInterval(showAttitude, 30000); }
-function stopAttitude() { if (attTimer) clearInterval(attTimer); attTimer = null; document.getElementById('attitudePop').style.display = 'none'; }
+function stopAttitude() { if (attTimer) clearInterval(attTimer); attTimer = null; hideAttitude(); }
+function hideAttitude() { document.getElementById('attitudeOverlay').style.display = 'none'; }
 function showAttitude() {
   const pick = attitudes[Math.floor(Math.random() * attitudes.length)];
   document.getElementById('attEmoji').textContent = pick[0];
   document.getElementById('attText').textContent = pick[1];
-  const p = document.getElementById('attitudePop');
-  p.style.display = 'flex';
-  setTimeout(() => p.style.display = 'none', 3200);
+  const overlay = document.getElementById('attitudeOverlay');
+  overlay.style.display = 'flex';
+  setTimeout(hideAttitude, 3500);
+}
+
+// ── THEME ──
+let lightTheme = LS.get('cptech_light_theme', false);
+function toggleTheme() {
+  lightTheme = !lightTheme;
+  LS.set('cptech_light_theme', lightTheme);
+  applyTheme();
+}
+function applyTheme() {
+  document.body.classList.toggle('light', lightTheme);
+  const b = document.getElementById('themeBtn');
+  if (b) b.textContent = lightTheme ? '🌙 Scuro' : '☀️ Chiaro';
+}
+
+// ── SCRIPT AREA RESIZE ──
+function initResize() {
+  const handle = document.getElementById('resizeHandle');
+  const body = document.getElementById('scriptBody');
+  if (!handle || !body) return;
+  let startY, startH;
+  handle.addEventListener('mousedown', e => {
+    startY = e.clientY;
+    startH = body.offsetHeight;
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', () => document.removeEventListener('mousemove', onMove), { once: true });
+  });
+  handle.addEventListener('touchstart', e => {
+    startY = e.touches[0].clientY;
+    startH = body.offsetHeight;
+    document.addEventListener('touchmove', onTouch);
+    document.addEventListener('touchend', () => document.removeEventListener('touchmove', onTouch), { once: true });
+  });
+  function onMove(e) { body.style.height = Math.max(80, startH + e.clientY - startY) + 'px'; body.style.flex = 'none'; }
+  function onTouch(e) { body.style.height = Math.max(80, startH + e.touches[0].clientY - startY) + 'px'; body.style.flex = 'none'; }
 }
 
 // ═══════════════════════════════════════════
@@ -1153,6 +1215,8 @@ function saveScript() {
   }
   populateStartSelect();
   updatePreview();
+  applyTheme();
+  initResize();
 })();
 </script>
 </body>

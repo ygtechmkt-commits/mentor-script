@@ -160,6 +160,9 @@ textarea:focus{border-color:rgba(41,211,255,.85)}
 .scriptCard{background:rgba(13,27,46,.88);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px}
 .scriptCard.active-script{border-color:var(--accent);background:rgba(41,211,255,.06)}
 .scriptCard .sName{font-size:16px;font-weight:900;flex:1}
+.sNameInput{background:transparent;border:1px solid transparent;border-radius:8px;color:var(--text);font-size:16px;font-weight:900;padding:4px 6px;width:100%;outline:none;cursor:text}
+.sNameInput:hover{border-color:var(--line)}
+.sNameInput:focus{border-color:var(--accent);background:var(--inputBg);box-shadow:0 0 0 3px rgba(41,211,255,.12)}
 .scriptCard .sMeta{font-size:12px;color:var(--muted);margin-top:2px}
 .scriptCard .sActions{display:flex;gap:8px}
 
@@ -902,7 +905,7 @@ function renderScriptList() {
     const nodeCount = Object.keys(sc.nodes).length;
     card.innerHTML = `
       <div style="flex:1">
-        <div class="sName">${sc.name}</div>
+        <input class="sName sNameInput" value="${escHtml(sc.name)}" onchange="renameScript('${sc.id}', this.value)" title="Clicca per modificare il nome" />
         <div class="sMeta">${nodeCount} nodi · avvio: <code>${sc.startNode}</code></div>
       </div>
       <div class="sActions">
@@ -911,6 +914,21 @@ function renderScriptList() {
       </div>`;
     el.appendChild(card);
   });
+}
+
+function renameScript(id, newName) {
+  newName = newName.trim();
+  if (!newName) return;
+  const sc = getScript(id);
+  if (!sc) return;
+  sc.name = newName;
+  saveScripts();
+  // update toolbar label if this is the active script
+  if (id === activeScriptId) {
+    document.getElementById('currentScriptLabel').textContent = `Script attivo: ${newName}`;
+    populateStartSelect();
+  }
+  showToast(`Script rinominato: "${newName}"`);
 }
 
 function selectScript(id) {

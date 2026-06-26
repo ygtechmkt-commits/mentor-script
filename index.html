@@ -199,7 +199,7 @@ body.compact textarea{min-height:105px}
 <!-- ── TABS ── -->
 <nav class="tabsBar">
   <button class="tabBtn active" data-tab="tab-start" onclick="switchTab('tab-start')">📞 Chiama</button>
-  <button class="tabBtn" data-tab="tab-editor" onclick="switchTab('tab-editor')">✏️ Editor Script</button>
+  <button class="tabBtn" data-tab="tab-editor" onclick="requestEditorAccess()">✏️ Editor Script 🔒</button>
 </nav>
 
 <!-- ══════════════ TAB: CHIAMA ══════════════ -->
@@ -374,6 +374,24 @@ BOTTONE: Altro bottone → altro-nodo
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
+<!-- Password modal -->
+<div id="pwOverlay" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(4,9,20,.88);backdrop-filter:blur(8px);align-items:center;justify-content:center">
+  <div style="background:#0d1b2e;border:1px solid rgba(255,255,255,.14);border-radius:26px;padding:36px 32px;width:min(420px,calc(100vw - 32px));box-shadow:0 30px 90px rgba(0,0,0,.5)">
+    <div style="font-size:36px;text-align:center;margin-bottom:16px">🔒</div>
+    <h2 style="margin:0 0 6px;text-align:center;font-size:22px;letter-spacing:-.4px">Area Riservata</h2>
+    <p style="margin:0 0 24px;text-align:center;color:#9fb2c8;font-size:14px">Inserisci la password per accedere all'editor script.</p>
+    <input id="pwInput" type="password" placeholder="Password" autocomplete="current-password"
+      style="width:100%;background:#071523;border:1px solid rgba(255,255,255,.18);color:#eef6ff;border-radius:14px;padding:15px 16px;font-size:18px;outline:none;margin-bottom:12px;letter-spacing:.05em"
+      onkeydown="if(event.key==='Enter')checkPassword()" />
+    <div id="pwError" style="color:#ff6b7a;font-size:13px;font-weight:900;text-align:center;min-height:18px;margin-bottom:12px"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <button onclick="closePwModal()" style="border:1px solid rgba(255,255,255,.14);background:#11233a;color:#eef6ff;padding:13px;border-radius:13px;font-size:15px;font-weight:900;cursor:pointer">Annulla</button>
+      <button onclick="checkPassword()" style="border:0;background:linear-gradient(135deg,#29d3ff,#63e9ff);color:#03111c;padding:13px;border-radius:13px;font-size:15px;font-weight:900;cursor:pointer">Entra</button>
+    </div>
+    <p style="margin:18px 0 0;text-align:center;color:#4a6080;font-size:11px">L'accesso rimane attivo per tutta la sessione del browser.</p>
+  </div>
+</div>
+
 <script>
 // ═══════════════════════════════════════════
 // STORAGE HELPERS
@@ -416,6 +434,47 @@ const attitudes = [
 // ═══════════════════════════════════════════
 // TABS
 // ═══════════════════════════════════════════
+// ═══════════════════════════════════════════
+// PASSWORD GUARD
+// ═══════════════════════════════════════════
+const EDITOR_HASH = 'aaa95fb61d6a4c278f3097048d859953a22985a8100e9687a632655b0ab0bf23';
+let editorUnlocked = sessionStorage.getItem('cptech_editor_unlocked') === '1';
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+function requestEditorAccess() {
+  if (editorUnlocked) { switchTab('tab-editor'); return; }
+  const overlay = document.getElementById('pwOverlay');
+  overlay.style.display = 'flex';
+  setTimeout(() => document.getElementById('pwInput').focus(), 80);
+}
+
+function closePwModal() {
+  document.getElementById('pwOverlay').style.display = 'none';
+  document.getElementById('pwInput').value = '';
+  document.getElementById('pwError').textContent = '';
+}
+
+async function checkPassword() {
+  const val = document.getElementById('pwInput').value;
+  const hash = await sha256(val);
+  if (hash === EDITOR_HASH) {
+    editorUnlocked = true;
+    sessionStorage.setItem('cptech_editor_unlocked', '1');
+    closePwModal();
+    switchTab('tab-editor');
+    // update tab label
+    document.querySelector('[data-tab="tab-editor"]').textContent = '✏️ Editor Script';
+  } else {
+    document.getElementById('pwError').textContent = 'Password errata. Riprova.';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+
 function switchTab(id) {
   document.querySelectorAll('.tabContent').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.tabBtn').forEach(el => el.classList.remove('active'));

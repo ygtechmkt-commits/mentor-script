@@ -497,6 +497,7 @@ function switchTab(id) {
   document.getElementById(id).classList.add('active');
   document.querySelector(`[data-tab="${id}"]`).classList.add('active');
   if (id === 'tab-editor') renderEditor();
+  if (id === 'tab-start') { populateStartSelect(); updatePreview(); }
 }
 
 // ═══════════════════════════════════════════

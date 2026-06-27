@@ -10,14 +10,12 @@
   --text:#eef6ff;--muted:#9fb2c8;--line:rgba(255,255,255,.12);
   --accent:#29d3ff;--green:#54ffa8;--danger:#ff6b7a;--warn:#ffbe3a;
   --radius:18px;--scriptSize:20px;--scriptLine:1.55;--scriptPad:20px;
-  --sideWidth:34%;
   --bodyBg:radial-gradient(circle at top left,#123456 0,#07111f 40%,#040914 100%);
   --topbarBg:rgba(13,27,46,.84);--panelBg:rgba(13,27,46,.88);
   --boxBg:rgba(255,255,255,.045);--inputBg:#071523;--smallBtnBg:#10243b;
   --smallBtnHover:#1b3a60;--nameMiniBg:#0b1b2e;--toolBtnBg:#11233a;--toolBtnHover:#193354
 }
 body.light{
-  --bg:#f0f4f8;--panel:#ffffff;--panel2:#f7f9fb;
   --text:#0f1e2e;--muted:#5a7590;--line:rgba(0,0,0,.11);
   --bodyBg:linear-gradient(135deg,#dbeeff 0,#f0f4f8 60%,#e8f0f8 100%);
   --topbarBg:rgba(255,255,255,.92);--panelBg:rgba(255,255,255,.97);
@@ -29,6 +27,37 @@ html,body{margin:0;padding:0;width:100%;min-height:100%;font-family:Inter,Arial,
 button,input,textarea,select{font-family:inherit}
 .hidden{display:none!important}
 
+/* ── LOADING ── */
+#loadingScreen{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#07111f;gap:18px}
+.spinner{width:44px;height:44px;border:4px solid rgba(41,211,255,.2);border-top-color:#29d3ff;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loadingScreen p{color:#9fb2c8;font-size:15px;font-weight:700}
+
+/* ── LOGIN ── */
+#loginScreen{min-height:100vh;display:grid;place-items:center;padding:20px}
+.loginBox{background:rgba(13,27,46,.96);border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:44px 36px;width:min(420px,100%);box-shadow:0 32px 100px rgba(0,0,0,.5)}
+.loginLogo{width:60px;height:60px;border-radius:18px;background:linear-gradient(135deg,#29d3ff,#174bff);display:grid;place-items:center;font-weight:1000;color:#00111a;font-size:20px;margin:0 auto 20px}
+.loginBox h1{margin:0 0 6px;font-size:26px;text-align:center;letter-spacing:-.5px}
+.loginBox p{margin:0 0 28px;color:#9fb2c8;font-size:14px;text-align:center}
+.loginField{width:100%;background:#071523;border:1px solid rgba(255,255,255,.15);color:#eef6ff;border-radius:14px;padding:14px 16px;font-size:16px;outline:none;margin-bottom:12px}
+.loginField:focus{border-color:#29d3ff;box-shadow:0 0 0 3px rgba(41,211,255,.12)}
+.loginErr{color:#ff6b7a;font-size:13px;font-weight:700;text-align:center;min-height:18px;margin-bottom:10px}
+.btnLogin{width:100%;border:0;background:linear-gradient(135deg,#29d3ff,#63e9ff);color:#03111c;padding:15px;border-radius:14px;font-size:16px;font-weight:900;cursor:pointer;transition:.16s;margin-bottom:10px}
+.btnLogin:hover{filter:brightness(1.07)}
+.btnGoogle{width:100%;border:1px solid rgba(255,255,255,.15);background:#fff;color:#1a1a1a;padding:13px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:.16s}
+.btnGoogle:hover{background:#f5f5f5}
+.loginDivider{display:flex;align-items:center;gap:10px;margin:12px 0;color:#4a6080;font-size:13px}
+.loginDivider::before,.loginDivider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1)}
+.loginSwitch{text-align:center;margin-top:18px;font-size:13px;color:#9fb2c8}
+.loginSwitch a{color:#29d3ff;cursor:pointer;font-weight:700;text-decoration:none}
+
+/* ── PENDING ── */
+#pendingScreen{min-height:100vh;display:grid;place-items:center;padding:20px}
+.pendingBox{background:rgba(13,27,46,.96);border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:44px 36px;width:min(480px,100%);text-align:center;box-shadow:0 32px 100px rgba(0,0,0,.5)}
+.pendingBox .big{font-size:56px;margin-bottom:16px}
+.pendingBox h2{margin:0 0 10px;font-size:22px}
+.pendingBox p{margin:0 0 24px;color:#9fb2c8;font-size:15px;line-height:1.5}
+
 /* ── TABS HEADER ── */
 .tabsBar{position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:0;background:#050f1c;border-bottom:1px solid var(--line)}
 body.light .tabsBar{background:#fff}
@@ -37,6 +66,10 @@ body.light .tabsBar{background:#fff}
 .tabBtn.active{color:var(--accent);border-bottom-color:var(--accent)}
 .tabContent{display:none;min-height:calc(100vh - 49px)}
 .tabContent.active{display:block}
+.tabsBarRight{margin-left:auto;display:flex;align-items:center;gap:8px;padding:0 12px}
+.userBadge{font-size:12px;color:var(--muted);font-weight:700}
+.signOutBtn{border:1px solid var(--line);background:transparent;color:var(--muted);padding:7px 12px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer}
+.signOutBtn:hover{color:var(--danger);border-color:var(--danger)}
 
 /* ── START PAGE ── */
 .startPage{min-height:calc(100vh - 49px);display:grid;place-items:center;padding:18px}
@@ -58,8 +91,6 @@ body.light .tabsBar{background:#fff}
 .mobileBtn{background:linear-gradient(135deg,var(--green),#d8ff84)}
 .modeBtn:hover{transform:translateY(-2px);filter:brightness(1.06)}
 .smallHelp{font-size:13px;color:var(--muted);line-height:1.4}
-
-/* script selector on start */
 .scriptSelector{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:18px;padding:14px}
 .scriptSelector label{font-size:13px;font-weight:900;color:var(--muted);margin-bottom:8px;display:block}
 .scriptSelector select{width:100%;background:#071523;border:1px solid rgba(255,255,255,.15);color:var(--text);border-radius:12px;padding:12px;font-size:16px;font-weight:800;outline:none;cursor:pointer}
@@ -67,14 +98,18 @@ body.light .tabsBar{background:#fff}
 .noScript{color:var(--warn);font-size:14px;margin-top:8px}
 
 /* ── APP (chiamata) ── */
-.app{width:100%;min-height:calc(100vh - 49px);padding:14px;display:flex;flex-direction:column;gap:12px;max-width:1280px;margin:0 auto;box-sizing:border-box}
+.app{width:100%;min-height:calc(100vh - 49px);padding:14px;display:flex;flex-direction:column;gap:12px;max-width:1280px;margin:0 auto}
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--topbarBg);border:1px solid var(--line);border-radius:var(--radius);padding:11px 14px;backdrop-filter:blur(12px)}
 .brand{display:flex;align-items:center;gap:10px;min-width:0}
 .logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#174bff);display:grid;place-items:center;font-weight:1000;color:#00111a;font-size:13px;box-shadow:0 8px 24px rgba(41,211,255,.18);flex-shrink:0}
 .brand h1{font-size:15px;line-height:1.1;margin:0;white-space:nowrap}
 .brand p{margin:2px 0 0;color:var(--muted);font-size:11px}
 .tools{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:wrap}
+.nameMini{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--nameMiniBg);border-radius:14px;padding:7px 9px}
 .nameMini span{font-size:12px;font-weight:900;color:var(--muted)}
+.nameMini input{width:125px;background:var(--inputBg);border:1px solid rgba(255,255,255,.12);border-radius:10px;color:var(--text);padding:8px 9px;font-size:14px;font-weight:900;outline:none}
+.toolBtn{border:1px solid var(--line);background:var(--toolBtnBg);color:var(--text);padding:10px 12px;border-radius:13px;font-size:14px;font-weight:900;cursor:pointer;transition:.18s ease}
+.toolBtn:hover{transform:translateY(-1px);background:var(--toolBtnHover)}
 .toolBtn.active{background:linear-gradient(135deg,#1bd384,#29d3ff);color:#03111c;border-color:transparent}
 .layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:12px;align-items:start}
 .panel{background:var(--panelBg);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 20px 60px rgba(0,0,0,.24);overflow:hidden}
@@ -87,7 +122,6 @@ body.light .tabsBar{background:#fff}
 .nodeHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.04),transparent)}
 .nodeHeader h2{margin:0;font-size:clamp(17px,1.6vw,22px);line-height:1.15;letter-spacing:-.2px}
 .badge{white-space:nowrap;border:1px solid rgba(41,211,255,.35);background:rgba(41,211,255,.10);color:#bff3ff;border-radius:999px;padding:8px 10px;font-size:12px;font-weight:950;letter-spacing:.5px}
-/* .scriptBody defined after scriptPanel override */
 .label{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--green);font-weight:950;margin-bottom:10px}
 .phrase{white-space:pre-wrap;font-size:var(--scriptSize);line-height:var(--scriptLine);font-weight:800;letter-spacing:-.1px}
 .side{padding:10px;display:flex;flex-direction:column;gap:10px;overflow:auto}
@@ -99,10 +133,6 @@ body.light .tabsBar{background:#fff}
 .nav{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .smallBtn{border:1px solid var(--line);background:var(--smallBtnBg);color:var(--text);padding:11px 12px;border-radius:14px;font-weight:900;cursor:pointer}
 .smallBtn:hover{background:var(--smallBtnHover)}
-.nameMini{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--nameMiniBg);border-radius:14px;padding:7px 9px}
-.nameMini input{width:125px;background:var(--inputBg);border:1px solid rgba(255,255,255,.12);border-radius:10px;color:var(--text);padding:8px 9px;font-size:14px;font-weight:900;outline:none}
-.toolBtn{border:1px solid var(--line);background:var(--toolBtnBg);color:var(--text);padding:10px 12px;border-radius:13px;font-size:14px;font-weight:900;cursor:pointer;transition:.18s ease}
-.toolBtn:hover{transform:translateY(-1px);background:var(--toolBtnHover)}
 textarea{width:100%;min-height:152px;background:var(--inputBg);border:1px solid var(--line);border-radius:15px;color:var(--text);padding:13px;font-size:15px;resize:vertical;outline:none}
 textarea:focus{border-color:rgba(41,211,255,.85)}
 .noteActions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
@@ -114,9 +144,6 @@ textarea:focus{border-color:rgba(41,211,255,.85)}
 .attitudePop .emoji{font-size:72px;line-height:1}
 .attitudePop .txt{font-size:22px;line-height:1.25;font-weight:950;color:#0a1a2e}
 @keyframes popIn{from{transform:scale(.82);opacity:0}to{transform:none;opacity:1}}
-.emptyScript{text-align:center;padding:60px 20px;color:var(--muted)}
-.emptyScript .big{font-size:48px;margin-bottom:16px}
-.emptyScript p{font-size:18px}
 
 /* ── EDITOR ── */
 .editorPage{padding:20px;max-width:1200px;margin:0 auto}
@@ -132,8 +159,6 @@ textarea:focus{border-color:rgba(41,211,255,.85)}
 .btnDanger:hover{background:rgba(255,107,122,.22)}
 .btnGreen{border:0;background:linear-gradient(135deg,var(--green),#29d3ff);color:#031a10;padding:11px 18px;border-radius:13px;font-size:14px;font-weight:900;cursor:pointer}
 .btnGreen:hover{filter:brightness(1.07)}
-
-/* import panel */
 .importPanel{background:rgba(13,27,46,.88);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:18px}
 .importPanel h3{margin:0 0 12px;font-size:16px;color:#d9f2ff}
 .importTabs{display:flex;gap:8px;margin-bottom:14px}
@@ -147,8 +172,6 @@ textarea:focus{border-color:rgba(41,211,255,.85)}
 .importActions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
 .fileInputWrap{position:relative;overflow:hidden;display:inline-block}
 .fileInputWrap input[type=file]{position:absolute;top:0;left:0;opacity:0;width:100%;height:100%;cursor:pointer}
-
-/* script list */
 .scriptList{display:grid;gap:10px;margin-bottom:18px}
 .scriptCard{background:rgba(13,27,46,.88);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px}
 .scriptCard.active-script{border-color:var(--accent);background:rgba(41,211,255,.06)}
@@ -158,8 +181,6 @@ textarea:focus{border-color:rgba(41,211,255,.85)}
 .sNameInput:focus{border-color:var(--accent);background:var(--inputBg);box-shadow:0 0 0 3px rgba(41,211,255,.12)}
 .scriptCard .sMeta{font-size:12px;color:var(--muted);margin-top:2px}
 .scriptCard .sActions{display:flex;gap:8px}
-
-/* node editor grid */
 .nodeGrid{display:grid;gap:12px}
 .nodeCard{background:rgba(13,27,46,.88);border:1px solid var(--line);border-radius:18px;overflow:hidden}
 .nodeCard.is-start{border-color:var(--green)}
@@ -187,6 +208,32 @@ textarea:focus{border-color:rgba(41,211,255,.85)}
 .nodeActions{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
 .setStartBtn{border:1px solid rgba(84,255,168,.3);background:rgba(84,255,168,.08);color:var(--green);padding:8px 12px;border-radius:10px;font-size:12px;font-weight:900;cursor:pointer}
 .setStartBtn:hover{background:rgba(84,255,168,.16)}
+
+/* ── USERS TAB ── */
+.userCard{background:rgba(13,27,46,.88);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.userCardTop{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.userAvatar{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#b96dff,#29d3ff);display:grid;place-items:center;font-size:16px;font-weight:900;color:#fff;flex-shrink:0}
+.userInfo{flex:1}
+.userInfo .uName{font-size:15px;font-weight:900}
+.userInfo .uEmail{font-size:12px;color:var(--muted);margin-top:2px}
+.userStatus{font-size:12px;font-weight:900;padding:4px 10px;border-radius:999px}
+.userStatus.enabled{background:rgba(84,255,168,.15);color:var(--green);border:1px solid rgba(84,255,168,.3)}
+.userStatus.disabled{background:rgba(255,107,122,.1);color:var(--danger);border:1px solid rgba(255,107,122,.25)}
+.userStatus.pending{background:rgba(255,190,58,.1);color:var(--warn);border:1px solid rgba(255,190,58,.25)}
+.toggleEnableBtn{border:0;padding:8px 14px;border-radius:10px;font-size:13px;font-weight:900;cursor:pointer;transition:.15s}
+.toggleEnableBtn.enable{background:rgba(84,255,168,.15);color:var(--green);border:1px solid rgba(84,255,168,.3)}
+.toggleEnableBtn.enable:hover{background:rgba(84,255,168,.28)}
+.toggleEnableBtn.disable{background:rgba(255,107,122,.1);color:var(--danger);border:1px solid rgba(255,107,122,.25)}
+.toggleEnableBtn.disable:hover{background:rgba(255,107,122,.22)}
+.scriptAssign{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.scriptAssign h4{margin:0 0 8px;font-size:12px;color:var(--muted);font-weight:900;letter-spacing:.8px;text-transform:uppercase}
+.scriptCheckList{display:flex;flex-wrap:wrap;gap:8px}
+.scriptCheck{display:flex;align-items:center;gap:6px;background:var(--boxBg);border:1px solid var(--line);border-radius:10px;padding:7px 10px;font-size:13px;font-weight:700;cursor:pointer;transition:.14s}
+.scriptCheck input{accent-color:var(--accent);width:15px;height:15px;cursor:pointer}
+.scriptCheck:hover{border-color:var(--accent)}
+.noUsers{color:var(--muted);font-size:14px;padding:20px;text-align:center}
+
+/* ── TOAST ── */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(12px);background:#1bd384;color:#031a10;padding:12px 22px;border-radius:14px;font-weight:900;font-size:14px;opacity:0;transition:.25s;z-index:300;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
@@ -207,6 +254,7 @@ body.compact textarea{min-height:105px}
   .hero,.startBox{border-radius:20px}
   .editorPage{padding:12px}
   .editorToolbar{gap:8px}
+  .loginBox{padding:28px 20px}
 }
 @media(max-width:900px){
   .layout{grid-template-columns:1fr!important}
@@ -217,16 +265,71 @@ body.compact textarea{min-height:105px}
 </head>
 <body>
 
-<!-- ── TABS ── -->
+<!-- ── LOADING ── -->
+<div id="loadingScreen">
+  <div class="spinner"></div>
+  <p>Caricamento...</p>
+</div>
+
+<!-- ── LOGIN ── -->
+<div id="loginScreen" class="hidden">
+  <div class="loginBox">
+    <div class="loginLogo">CP</div>
+    <h1>Mentor Script</h1>
+    <p id="loginSubtitle">Accedi per continuare</p>
+    <div id="loginErr" class="loginErr"></div>
+
+    <!-- Login form -->
+    <div id="formLogin">
+      <input id="loginEmail" class="loginField" type="email" placeholder="Email" autocomplete="email" />
+      <input id="loginPassword" class="loginField" type="password" placeholder="Password" autocomplete="current-password"
+        onkeydown="if(event.key==='Enter')doLogin()" />
+      <button class="btnLogin" onclick="doLogin()">Accedi</button>
+      <div class="loginDivider">oppure</div>
+      <button class="btnGoogle" onclick="doGoogleLogin()">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Accedi con Google
+      </button>
+      <div class="loginSwitch">Non hai un account? <a onclick="showRegister()">Registrati</a></div>
+    </div>
+
+    <!-- Register form -->
+    <div id="formRegister" class="hidden">
+      <input id="regName" class="loginField" type="text" placeholder="Il tuo nome" autocomplete="given-name" />
+      <input id="regEmail" class="loginField" type="email" placeholder="Email" autocomplete="email" />
+      <input id="regPassword" class="loginField" type="password" placeholder="Password (min. 6 caratteri)" autocomplete="new-password"
+        onkeydown="if(event.key==='Enter')doRegister()" />
+      <button class="btnLogin" onclick="doRegister()">Crea account</button>
+      <div class="loginSwitch">Hai già un account? <a onclick="showLogin()">Accedi</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PENDING ── -->
+<div id="pendingScreen" class="hidden">
+  <div class="pendingBox">
+    <div class="big">⏳</div>
+    <h2>Account in attesa di approvazione</h2>
+    <p>Il tuo account è stato creato. L'amministratore deve abilitarti prima che tu possa accedere.<br><br>Riprova più tardi o contatta il tuo responsabile.</p>
+    <button class="btnLogin" style="max-width:260px;margin:0 auto" onclick="doSignOut()">Esci</button>
+  </div>
+</div>
+
+<!-- ── MAIN APP ── -->
+<div id="mainApp" class="hidden">
+
 <nav class="tabsBar">
   <button class="tabBtn active" data-tab="tab-start" onclick="switchTab('tab-start')">📞 Chiama</button>
-  <button class="tabBtn" data-tab="tab-editor" onclick="requestEditorAccess()">✏️ Editor Script 🔒</button>
+  <button class="tabBtn admin-only hidden" data-tab="tab-editor" onclick="switchTab('tab-editor')">✏️ Editor Script</button>
+  <button class="tabBtn admin-only hidden" data-tab="tab-users" onclick="switchTab('tab-users')">👥 Utenti</button>
+  <div class="tabsBarRight">
+    <span class="userBadge" id="userBadge"></span>
+    <button class="signOutBtn" onclick="doSignOut()">Esci</button>
+  </div>
 </nav>
 
-<!-- ══════════════ TAB: CHIAMA ══════════════ -->
+<!-- ══ TAB: CHIAMA ══ -->
 <div id="tab-start" class="tabContent active">
-
-  <!-- START PAGE -->
   <section id="startPage" class="startPage">
     <main class="startWrap">
       <section class="hero">
@@ -240,24 +343,20 @@ body.compact textarea{min-height:105px}
           <input id="startName" type="text" placeholder="Es. Marco" autocomplete="given-name" />
         </div>
         <div class="preview" id="preview">Ciao, sono <strong>[NOME]</strong> di CP TECH di San Marino e cercavo il titolare.</div>
-
-        <!-- script selector -->
         <div class="scriptSelector">
           <label>Script da usare</label>
           <select id="startScriptSelect" onchange="onStartScriptChange()"></select>
-          <div class="noScript hidden" id="noScriptWarn">⚠️ Nessuno script disponibile. Vai su <strong>Editor Script</strong> per crearne uno.</div>
+          <div class="noScript hidden" id="noScriptWarn">⚠️ Nessuno script disponibile.</div>
         </div>
-
         <div class="modeActions">
           <button class="modeBtn desktopBtn" onclick="startApp('desktop')">💻 Versione Desktop</button>
           <button class="modeBtn mobileBtn" onclick="startApp('mobile')">📱 Versione Telefono</button>
         </div>
-        <div class="smallHelp">Il nome viene salvato solo su questo dispositivo. Puoi cambiarlo anche dentro lo script.</div>
+        <div class="smallHelp">Il nome viene salvato solo su questo dispositivo.</div>
       </section>
     </main>
   </section>
 
-  <!-- APP PAGE -->
   <div id="appPage" class="app hidden">
     <header class="topbar">
       <div class="brand">
@@ -309,7 +408,7 @@ body.compact textarea{min-height:105px}
             <button class="smallBtn" onclick="copyNotes()">Copia note</button>
             <button class="smallBtn" onclick="clearNotes()">Pulisci note</button>
           </div>
-          <div class="saveStatus" id="saveStatus">Note salvate solo su questo dispositivo.</div>
+          <div class="saveStatus" id="saveStatus">Note salvate su questo dispositivo.</div>
         </div>
         <div class="box">
           <h3>Punto del flusso</h3>
@@ -318,37 +417,30 @@ body.compact textarea{min-height:105px}
       </aside>
     </div>
   </div>
-
 </div><!-- /tab-start -->
 
-<!-- ══════════════ TAB: EDITOR ══════════════ -->
+<!-- ══ TAB: EDITOR SCRIPT ══ -->
 <div id="tab-editor" class="tabContent">
   <div class="editorPage">
     <h2>Editor Script</h2>
-    <p class="sub">Crea, importa e modifica gli script telefonici. Le modifiche vengono salvate automaticamente nel browser.</p>
-
-    <!-- Script list + new -->
+    <p class="sub">Crea, importa e modifica gli script telefonici. Le modifiche vengono salvate su Firebase.</p>
     <div class="editorToolbar">
       <h3 id="currentScriptLabel">Nessuno script selezionato</h3>
       <button class="btnSecondary" onclick="newScript()">+ Nuovo script</button>
       <button class="btnGreen" onclick="exportScript()">⬇ Esporta .txt</button>
-      <button class="btnPrimary" onclick="backupAll()">💾 Backup tutti</button>
+      <button class="btnPrimary" onclick="backupAll()">💾 Backup JSON</button>
       <div class="fileInputWrap">
         <button class="btnSecondary">📂 Ripristina backup</button>
         <input type="file" accept=".json" onchange="restoreBackup(event)" />
       </div>
     </div>
-
     <div class="scriptList" id="scriptList"></div>
-
-    <!-- Import panel -->
     <div class="importPanel">
       <h3>Importa script da testo</h3>
       <div class="importTabs">
         <button class="importTab active" onclick="switchImport('text')">Incolla testo</button>
         <button class="importTab" onclick="switchImport('file')">Carica file</button>
       </div>
-
       <div id="importText" class="importArea active">
         <textarea id="rawImport" placeholder="Incolla qui il testo dello script nel formato indicato sotto..."></textarea>
         <div class="syntaxHelp">
@@ -361,17 +453,16 @@ Può essere su più righe.
 BOTTONE: Testo del bottone → nodo-destinazione
 BOTTONE: Altro bottone → altro-nodo
 
-<strong>— Il primo nodo è sempre quello di partenza (start) —</strong>
-<strong>— Usa → per separare etichetta e destinazione del bottone —</strong>
+<strong>— Il primo nodo è sempre quello di partenza —</strong>
+<strong>— Usa → per separare etichetta e destinazione —</strong>
         </div>
         <div class="importActions">
           <button class="btnPrimary" onclick="parseAndImport()">Importa e aggiungi</button>
           <button class="btnSecondary" onclick="parseAndReplace()">Importa e sostituisci tutto</button>
         </div>
       </div>
-
       <div id="importFile" class="importArea">
-        <p style="color:var(--muted);font-size:14px">Seleziona un file <code>.txt</code> esportato in precedenza oppure scritto nel formato sopra.</p>
+        <p style="color:var(--muted);font-size:14px">Seleziona un file <code>.txt</code> esportato in precedenza.</p>
         <div class="fileInputWrap">
           <button class="btnPrimary">📂 Scegli file .txt</button>
           <input type="file" accept=".txt,.json" onchange="loadFile(event)" />
@@ -379,8 +470,6 @@ BOTTONE: Altro bottone → altro-nodo
         <p id="fileStatus" style="font-size:13px;color:var(--muted);margin-top:8px"></p>
       </div>
     </div>
-
-    <!-- Node editor -->
     <div class="editorToolbar">
       <h3>Nodi dello script</h3>
       <button class="btnSecondary" onclick="addNode()">+ Aggiungi nodo</button>
@@ -390,9 +479,24 @@ BOTTONE: Altro bottone → altro-nodo
   </div>
 </div><!-- /tab-editor -->
 
+<!-- ══ TAB: UTENTI ══ -->
+<div id="tab-users" class="tabContent">
+  <div class="editorPage">
+    <h2>Gestione Utenti</h2>
+    <p class="sub">Abilita i commerciali e assegna loro gli script. I commerciali si registrano autonomamente e poi tu li attivi qui.</p>
+    <div class="editorToolbar">
+      <h3>Utenti registrati</h3>
+      <button class="btnPrimary" onclick="renderUsersList()">🔄 Aggiorna</button>
+    </div>
+    <div id="usersList"></div>
+  </div>
+</div><!-- /tab-users -->
+
+</div><!-- /mainApp -->
+
 <!-- Attitude popup -->
 <div class="attitudeOverlay" id="attitudeOverlay" onclick="hideAttitude()">
-  <div class="attitudePop" id="attitudePop">
+  <div class="attitudePop">
     <div class="emoji" id="attEmoji">😄</div>
     <div class="txt" id="attText">Sorridi, si sente al telefono.</div>
   </div>
@@ -401,27 +505,167 @@ BOTTONE: Altro bottone → altro-nodo
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<!-- Password modal -->
-<div id="pwOverlay" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(4,9,20,.88);backdrop-filter:blur(8px);align-items:center;justify-content:center">
-  <div style="background:#0d1b2e;border:1px solid rgba(255,255,255,.14);border-radius:26px;padding:36px 32px;width:min(420px,calc(100vw - 32px));box-shadow:0 30px 90px rgba(0,0,0,.5)">
-    <div style="font-size:36px;text-align:center;margin-bottom:16px">🔒</div>
-    <h2 style="margin:0 0 6px;text-align:center;font-size:22px;letter-spacing:-.4px">Area Riservata</h2>
-    <p style="margin:0 0 24px;text-align:center;color:#9fb2c8;font-size:14px">Inserisci la password per accedere all'editor script.</p>
-    <input id="pwInput" type="password" placeholder="Password" autocomplete="current-password"
-      style="width:100%;background:#071523;border:1px solid rgba(255,255,255,.18);color:#eef6ff;border-radius:14px;padding:15px 16px;font-size:18px;outline:none;margin-bottom:12px;letter-spacing:.05em"
-      onkeydown="if(event.key==='Enter')checkPassword()" />
-    <div id="pwError" style="color:#ff6b7a;font-size:13px;font-weight:900;text-align:center;min-height:18px;margin-bottom:12px"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      <button onclick="closePwModal()" style="border:1px solid rgba(255,255,255,.14);background:#11233a;color:#eef6ff;padding:13px;border-radius:13px;font-size:15px;font-weight:900;cursor:pointer">Annulla</button>
-      <button onclick="checkPassword()" style="border:0;background:linear-gradient(135deg,#29d3ff,#63e9ff);color:#03111c;padding:13px;border-radius:13px;font-size:15px;font-weight:900;cursor:pointer">Entra</button>
-    </div>
-    <p style="margin:18px 0 0;text-align:center;color:#4a6080;font-size:11px">L'accesso rimane attivo per tutta la sessione del browser.</p>
-  </div>
-</div>
+<!-- Firebase SDK (compat) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <script>
 // ═══════════════════════════════════════════
-// STORAGE HELPERS
+// FIREBASE
+// ═══════════════════════════════════════════
+const firebaseConfig = {
+  apiKey: "AIzaSyBUkFIxw1IWd88SnhGLfAVS1da-CCGcrOs",
+  authDomain: "mentor-script-f3984.firebaseapp.com",
+  projectId: "mentor-script-f3984",
+  storageBucket: "mentor-script-f3984.firebasestorage.app",
+  messagingSenderId: "149930920543",
+  appId: "1:149930920543:web:d3b6fb4ffa85f6d46f29ea"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const ADMIN_EMAIL = 'ygtech.mkt@gmail.com';
+
+let currentUser = null;
+let currentUserDoc = null;
+
+// ── AUTH STATE ──
+auth.onAuthStateChanged(async user => {
+  if (user) {
+    currentUser = user;
+    try {
+      await initUserSession(user);
+    } catch(e) {
+      console.error(e);
+      showScreen('login');
+    }
+  } else {
+    currentUser = null;
+    currentUserDoc = null;
+    showScreen('login');
+  }
+});
+
+async function initUserSession(user) {
+  showScreen('loading');
+  const ref = db.collection('users').doc(user.uid);
+  let snap = await ref.get();
+  if (!snap.exists) {
+    const isAdmin = user.email === ADMIN_EMAIL;
+    const data = {
+      email: user.email,
+      name: user.displayName || user.email.split('@')[0],
+      role: isAdmin ? 'admin' : 'commercial',
+      enabled: isAdmin,
+      assignedScripts: [],
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+    await ref.set(data);
+    currentUserDoc = data;
+  } else {
+    currentUserDoc = snap.data();
+    // Promote to admin if email matches
+    if (user.email === ADMIN_EMAIL && currentUserDoc.role !== 'admin') {
+      await ref.update({ role: 'admin', enabled: true });
+      currentUserDoc.role = 'admin';
+      currentUserDoc.enabled = true;
+    }
+  }
+  if (!currentUserDoc.enabled && currentUserDoc.role !== 'admin') {
+    showScreen('pending');
+    return;
+  }
+  await loadScriptsFromFirestore();
+  showMainApp();
+}
+
+function showScreen(name) {
+  document.getElementById('loadingScreen').classList.toggle('hidden', name !== 'loading');
+  document.getElementById('loginScreen').classList.toggle('hidden', name !== 'login');
+  document.getElementById('pendingScreen').classList.toggle('hidden', name !== 'pending');
+  document.getElementById('mainApp').classList.toggle('hidden', name !== 'main');
+}
+
+function showMainApp() {
+  const isAdmin = currentUserDoc?.role === 'admin';
+  document.querySelectorAll('.admin-only').forEach(el => el.classList.toggle('hidden', !isAdmin));
+  document.getElementById('userBadge').textContent = currentUser?.email || '';
+  populateStartSelect();
+  updatePreview();
+  applyTheme();
+  initResize();
+  showScreen('main');
+}
+
+// ── AUTH ACTIONS ──
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pw = document.getElementById('loginPassword').value;
+  setLoginErr('');
+  try {
+    await auth.signInWithEmailAndPassword(email, pw);
+  } catch(e) {
+    setLoginErr(loginErrMsg(e.code));
+  }
+}
+
+async function doRegister() {
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pw = document.getElementById('regPassword').value;
+  setLoginErr('');
+  if (!name) { setLoginErr('Inserisci il tuo nome.'); return; }
+  try {
+    const cred = await auth.createUserWithEmailAndPassword(email, pw);
+    await cred.user.updateProfile({ displayName: name });
+  } catch(e) {
+    setLoginErr(loginErrMsg(e.code));
+  }
+}
+
+async function doGoogleLogin() {
+  setLoginErr('');
+  try {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    await auth.signInWithPopup(provider);
+  } catch(e) {
+    setLoginErr(loginErrMsg(e.code));
+  }
+}
+
+async function doSignOut() {
+  await auth.signOut();
+}
+
+function loginErrMsg(code) {
+  const msgs = {
+    'auth/user-not-found': 'Email non trovata.',
+    'auth/wrong-password': 'Password errata.',
+    'auth/invalid-email': 'Email non valida.',
+    'auth/email-already-in-use': 'Email già registrata. Prova ad accedere.',
+    'auth/weak-password': 'Password troppo corta (min. 6 caratteri).',
+    'auth/invalid-credential': 'Email o password errati.',
+    'auth/popup-closed-by-user': 'Accesso annullato.'
+  };
+  return msgs[code] || 'Errore: ' + code;
+}
+function setLoginErr(msg) { document.getElementById('loginErr').textContent = msg; }
+function showRegister() {
+  document.getElementById('formLogin').classList.add('hidden');
+  document.getElementById('formRegister').classList.remove('hidden');
+  document.getElementById('loginSubtitle').textContent = 'Crea il tuo account';
+  setLoginErr('');
+}
+function showLogin() {
+  document.getElementById('formRegister').classList.add('hidden');
+  document.getElementById('formLogin').classList.remove('hidden');
+  document.getElementById('loginSubtitle').textContent = 'Accedi per continuare';
+  setLoginErr('');
+}
+
+// ═══════════════════════════════════════════
+// STORAGE HELPERS (per preferenze locali)
 // ═══════════════════════════════════════════
 const LS = {
   get: (k, def) => { try { const v = localStorage.getItem(k); return v === null ? def : JSON.parse(v); } catch { return def; } },
@@ -431,14 +675,43 @@ const LS = {
 };
 
 // ═══════════════════════════════════════════
-// SCRIPTS STORE  { id, name, startNode, nodes: {id:{title,phrase,buttons:[[label,target]]}} }
+// SCRIPTS STORE (Firestore)
 // ═══════════════════════════════════════════
-let scripts = LS.get('cptech_scripts', []);
-let activeScriptId = LS.str('cptech_active_script', '');
+let scripts = [];
+let activeScriptId = '';
 
 function getScript(id) { return scripts.find(s => s.id === id) || null; }
 function getActiveScript() { return getScript(activeScriptId); }
-function saveScripts() { LS.set('cptech_scripts', scripts); }
+
+async function loadScriptsFromFirestore() {
+  const snap = await db.collection('scripts').orderBy('createdAt').get();
+  const all = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  const isAdmin = currentUserDoc?.role === 'admin';
+  if (isAdmin) {
+    scripts = all;
+    if (scripts.length === 0) await seedDefaultScript();
+  } else {
+    const assigned = currentUserDoc?.assignedScripts || [];
+    scripts = all.filter(s => assigned.includes(s.id));
+  }
+  activeScriptId = scripts[0]?.id || '';
+}
+
+async function saveScriptToFirestore(sc) {
+  const { id, ...data } = sc;
+  data.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+  if (!data.createdAt) data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+  await db.collection('scripts').doc(id).set(data);
+}
+
+async function deleteScriptFromFirestore(id) {
+  await db.collection('scripts').doc(id).delete();
+}
+
+// backward compat shim
+function saveScripts() {
+  // scripts are saved to Firestore explicitly; this is a no-op now
+}
 
 // ═══════════════════════════════════════════
 // CALL APP STATE
@@ -446,7 +719,7 @@ function saveScripts() { LS.set('cptech_scripts', scripts); }
 let current = 'start';
 let historyStack = [];
 let currentMode = LS.str('cptech_view_mode', '');
-let fontSize = LS.get('cptech_font', 24);
+let fontSize = LS.get('cptech_font', 20);
 let compact = LS.get('cptech_compact', false);
 let attitudeOn = LS.get('cptech_attitude', false);
 let attTimer = null;
@@ -458,62 +731,21 @@ const attitudes = [
   ['🙂','Gentilezza ferma.'],['🧠','Ascolta prima di rispondere.']
 ];
 
-// ═══════════════════════════════════════════
-// TABS
-// ═══════════════════════════════════════════
-// ═══════════════════════════════════════════
-// PASSWORD GUARD
-// ═══════════════════════════════════════════
-// password offuscata: non testo in chiaro, funziona anche su file://
-const _PK = atob('RmlkZWxpbzIwMjYh');
-let editorUnlocked = sessionStorage.getItem('cptech_editor_unlocked') === '1';
-
-function requestEditorAccess() {
-  if (editorUnlocked) { switchTab('tab-editor'); return; }
-  const overlay = document.getElementById('pwOverlay');
-  overlay.style.display = 'flex';
-  setTimeout(() => document.getElementById('pwInput').focus(), 80);
-}
-
-function closePwModal() {
-  document.getElementById('pwOverlay').style.display = 'none';
-  document.getElementById('pwInput').value = '';
-  document.getElementById('pwError').textContent = '';
-}
-
-function checkPassword() {
-  const val = document.getElementById('pwInput').value;
-  if (val === _PK) {
-    editorUnlocked = true;
-    sessionStorage.setItem('cptech_editor_unlocked', '1');
-    closePwModal();
-    switchTab('tab-editor');
-    document.querySelector('[data-tab="tab-editor"]').textContent = '✏️ Editor Script';
-  } else {
-    document.getElementById('pwError').textContent = 'Password errata. Riprova.';
-    document.getElementById('pwInput').value = '';
-    document.getElementById('pwInput').focus();
-  }
-}
-
 function switchTab(id) {
   document.querySelectorAll('.tabContent').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.tabBtn').forEach(el => el.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  document.querySelector(`[data-tab="${id}"]`).classList.add('active');
+  document.querySelector(`[data-tab="${id}"]`)?.classList.add('active');
   if (id === 'tab-editor') renderEditor();
   if (id === 'tab-start') { populateStartSelect(); updatePreview(); }
+  if (id === 'tab-users') renderUsersList();
 }
 
-// ═══════════════════════════════════════════
-// START PAGE
-// ═══════════════════════════════════════════
+// ── START PAGE ──
 const startNameEl = document.getElementById('startName');
 const previewEl = document.getElementById('preview');
 const startScriptSelectEl = document.getElementById('startScriptSelect');
-
 startNameEl.value = LS.str('cptech_seller_name');
-updatePreview();
 startNameEl.addEventListener('input', updatePreview);
 
 function updatePreview() {
@@ -522,20 +754,16 @@ function updatePreview() {
   const intro = getStartPhrase();
   previewEl.innerHTML = personalizeHtml(intro, n || '[NOME]');
 }
-
 function getStartPhrase() {
   const sc = getActiveScript();
   if (!sc) return 'Ciao, sono [NOME] di CP TECH di San Marino e cercavo il titolare.';
   const startNode = sc.nodes[sc.startNode];
   if (!startNode) return 'Ciao, sono [NOME]...';
-  const lines = startNode.phrase.split('\n');
-  return lines[0] || 'Ciao, sono [NOME]...';
+  return startNode.phrase.split('\n')[0] || 'Ciao, sono [NOME]...';
 }
-
 function personalizeHtml(text, name) {
   return text.replace(/\[NOME\]/g, `<strong>${name}</strong>`);
 }
-
 function populateStartSelect() {
   startScriptSelectEl.innerHTML = '';
   const warn = document.getElementById('noScriptWarn');
@@ -554,16 +782,12 @@ function populateStartSelect() {
     startScriptSelectEl.appendChild(opt);
   });
 }
-
 function onStartScriptChange() {
   activeScriptId = startScriptSelectEl.value;
-  LS.setStr('cptech_active_script', activeScriptId);
   updatePreview();
 }
 
-// ═══════════════════════════════════════════
-// APP
-// ═══════════════════════════════════════════
+// ── APP ──
 function startApp(mode) {
   const sc = getActiveScript();
   if (!sc) { showToast('Seleziona uno script prima di iniziare!', true); return; }
@@ -573,7 +797,6 @@ function startApp(mode) {
   LS.setStr('cptech_seller_name', startNameEl.value.trim());
   showApp();
 }
-
 function showApp() {
   document.getElementById('startPage').classList.add('hidden');
   document.getElementById('appPage').classList.remove('hidden');
@@ -589,7 +812,6 @@ function showApp() {
   render(current, false);
   if (attitudeOn) startAttitude();
 }
-
 function chooseMode() {
   stopAttitude();
   document.getElementById('appPage').classList.add('hidden');
@@ -597,13 +819,11 @@ function chooseMode() {
   startNameEl.value = document.getElementById('sellerName').value.trim();
   updatePreview();
 }
-
 function personalize(text) {
   const n = document.getElementById('sellerName').value.trim();
   if (!n) return text;
   return text.replaceAll('[NOME]', n);
 }
-
 function render(id, push = false) {
   const sc = getActiveScript();
   if (!sc) return;
@@ -628,7 +848,6 @@ function render(id, push = false) {
   renderPath();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
 function renderPath() {
   const sc = getActiveScript();
   const pathEl = document.getElementById('path');
@@ -641,20 +860,11 @@ function renderPath() {
     pathEl.appendChild(c);
   });
 }
-
-function goBack() {
-  const prev = historyStack.pop();
-  if (prev) render(prev, false);
-}
+function goBack() { const prev = historyStack.pop(); if (prev) render(prev, false); }
 function restart() { historyStack = []; render(getActiveScript()?.startNode || 'start', false); }
-
-function applyFont() {
-  document.documentElement.style.setProperty('--scriptSize', fontSize + 'px');
-  LS.set('cptech_font', fontSize);
-}
+function applyFont() { document.documentElement.style.setProperty('--scriptSize', fontSize + 'px'); LS.set('cptech_font', fontSize); }
 function changeFont(d) { fontSize = Math.max(8, Math.min(38, fontSize + d)); applyFont(); }
-function resetFont() { fontSize = currentMode === 'mobile' ? 18 : 24; applyFont(); }
-
+function resetFont() { fontSize = currentMode === 'mobile' ? 18 : 20; applyFont(); }
 function toggleCompact() { compact = !compact; document.body.classList.toggle('compact', compact); LS.set('cptech_compact', compact); updateCompactBtn(); }
 function updateCompactBtn() { document.getElementById('compactBtn').classList.toggle('active', compact); }
 
@@ -674,6 +884,7 @@ async function copyNotes() {
 }
 function clearNotes() { document.getElementById('notes').value = ''; LS.setStr('cptech_notes', ''); document.getElementById('saveStatus').textContent = 'Note pulite.'; }
 
+// ── ATTITUDE ──
 function toggleAttitude() { attitudeOn = !attitudeOn; LS.set('cptech_attitude', attitudeOn); updateAttitudeBtn(); attitudeOn ? startAttitude() : stopAttitude(); }
 function updateAttitudeBtn() { const b = document.getElementById('attitudeBtn'); b.textContent = attitudeOn ? 'Atteggiamento ON' : 'Atteggiamento OFF'; b.classList.toggle('active', attitudeOn); }
 function startAttitude() { stopAttitude(); attTimer = setInterval(showAttitude, 30000); }
@@ -683,39 +894,32 @@ function showAttitude() {
   const pick = attitudes[Math.floor(Math.random() * attitudes.length)];
   document.getElementById('attEmoji').textContent = pick[0];
   document.getElementById('attText').textContent = pick[1];
-  const overlay = document.getElementById('attitudeOverlay');
-  overlay.style.display = 'flex';
+  document.getElementById('attitudeOverlay').style.display = 'flex';
   setTimeout(hideAttitude, 3500);
 }
 
 // ── THEME ──
 let lightTheme = LS.get('cptech_light_theme', false);
-function toggleTheme() {
-  lightTheme = !lightTheme;
-  LS.set('cptech_light_theme', lightTheme);
-  applyTheme();
-}
+function toggleTheme() { lightTheme = !lightTheme; LS.set('cptech_light_theme', lightTheme); applyTheme(); }
 function applyTheme() {
   document.body.classList.toggle('light', lightTheme);
   const b = document.getElementById('themeBtn');
   if (b) b.textContent = lightTheme ? '🌙 Scuro' : '☀️ Chiaro';
 }
 
-// ── SCRIPT AREA RESIZE ──
+// ── RESIZE HANDLE ──
 function initResize() {
   const handle = document.getElementById('resizeHandle');
   const body = document.getElementById('scriptBody');
   if (!handle || !body) return;
   let startY, startH;
   handle.addEventListener('mousedown', e => {
-    startY = e.clientY;
-    startH = body.offsetHeight;
+    startY = e.clientY; startH = body.offsetHeight;
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', () => document.removeEventListener('mousemove', onMove), { once: true });
   });
   handle.addEventListener('touchstart', e => {
-    startY = e.touches[0].clientY;
-    startH = body.offsetHeight;
+    startY = e.touches[0].clientY; startH = body.offsetHeight;
     document.addEventListener('touchmove', onTouch);
     document.addEventListener('touchend', () => document.removeEventListener('touchmove', onTouch), { once: true });
   });
@@ -738,13 +942,12 @@ function showToast(msg, isError = false) {
 }
 
 // ═══════════════════════════════════════════
-// PARSER  (formato testo → nodi)
+// PARSER
 // ═══════════════════════════════════════════
 function parseScript(raw) {
   const nodes = {};
   let startNode = null;
   const blocks = raw.split(/^\[([^\]]+)\]/m);
-  // blocks: ['', 'nodo1', 'corpo1', 'nodo2', 'corpo2', ...]
   for (let i = 1; i < blocks.length; i += 2) {
     const id = blocks[i].trim();
     const body = blocks[i + 1] || '';
@@ -763,17 +966,12 @@ function parseScript(raw) {
 function serializeScript(sc) {
   let out = `# Script: ${sc.name}\n# Esportato da Mentor Script CP TECH\n\n`;
   const ids = Object.keys(sc.nodes);
-  // startNode first
   const ordered = [sc.startNode, ...ids.filter(id => id !== sc.startNode)];
   ordered.forEach(id => {
     const n = sc.nodes[id];
     if (!n) return;
-    out += `[${id}]\n`;
-    out += `TITOLO: ${n.title}\n`;
-    out += `FRASE:\n${n.phrase}\n`;
-    (n.buttons || []).forEach(([label, target]) => {
-      out += `BOTTONE: ${label} → ${target}\n`;
-    });
+    out += `[${id}]\nTITOLO: ${n.title}\nFRASE:\n${n.phrase}\n`;
+    (n.buttons || []).forEach(([label, target]) => { out += `BOTTONE: ${label} → ${target}\n`; });
     out += '\n';
   });
   return out;
@@ -788,129 +986,96 @@ function switchImport(tab) {
   event.currentTarget.classList.add('active');
   document.getElementById('import' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
 }
-
-function parseAndImport() {
+async function parseAndImport() {
   const raw = document.getElementById('rawImport').value.trim();
   if (!raw) { showToast('Nessun testo da importare.', true); return; }
   const { nodes, startNode } = parseScript(raw);
-  if (!startNode) { showToast('Formato non riconosciuto. Controlla la sintassi.', true); return; }
+  if (!startNode) { showToast('Formato non riconosciuto.', true); return; }
   let sc = getActiveScript();
-  if (!sc) {
-    sc = createNewScript('Script importato');
-  }
+  if (!sc) { sc = createNewScriptObj('Script importato'); scripts.push(sc); }
   Object.assign(sc.nodes, nodes);
   if (!sc.startNode) sc.startNode = startNode;
-  saveScripts();
+  await saveScriptToFirestore(sc);
   document.getElementById('rawImport').value = '';
   renderEditor();
-  showToast(`Importati ${Object.keys(nodes).length} nodi nello script "${sc.name}".`);
+  showToast(`Importati ${Object.keys(nodes).length} nodi.`);
 }
-
-function parseAndReplace() {
+async function parseAndReplace() {
   const raw = document.getElementById('rawImport').value.trim();
   if (!raw) { showToast('Nessun testo da importare.', true); return; }
   const { nodes, startNode } = parseScript(raw);
-  if (!startNode) { showToast('Formato non riconosciuto. Controlla la sintassi.', true); return; }
+  if (!startNode) { showToast('Formato non riconosciuto.', true); return; }
   let sc = getActiveScript();
-  if (!sc) {
-    sc = createNewScript('Script importato');
-  }
+  if (!sc) { sc = createNewScriptObj('Script importato'); scripts.push(sc); }
   sc.nodes = nodes;
   sc.startNode = startNode;
-  saveScripts();
+  await saveScriptToFirestore(sc);
   document.getElementById('rawImport').value = '';
   renderEditor();
-  showToast(`Script sostituito: ${Object.keys(nodes).length} nodi caricati.`);
+  showToast(`Script sostituito: ${Object.keys(nodes).length} nodi.`);
 }
-
 function loadFile(evt) {
   const file = evt.target.files[0];
   if (!file) return;
   const status = document.getElementById('fileStatus');
   status.textContent = `Caricamento: ${file.name}...`;
   const reader = new FileReader();
-  reader.onload = e => {
+  reader.onload = async e => {
     const raw = e.target.result;
-    // detect JSON (old format) vs text
-    if (raw.trim().startsWith('{') || raw.trim().startsWith('[')) {
-      try {
-        const data = JSON.parse(raw);
-        // handle old flat-object format {nodeId:{title,phrase,buttons}}
-        if (!Array.isArray(data) && typeof data === 'object') {
-          let sc = getActiveScript();
-          if (!sc) sc = createNewScript(file.name.replace(/\.[^.]+$/, ''));
-          const firstKey = Object.keys(data)[0];
-          if (data[firstKey]?.title !== undefined) {
-            // old format
-            sc.nodes = data;
-            sc.startNode = Object.keys(data)[0];
-          }
-          saveScripts();
-          renderEditor();
-          status.textContent = `✓ Importato (JSON): ${Object.keys(sc.nodes).length} nodi.`;
-        }
-        return;
-      } catch {}
-    }
-    // text format
     const { nodes, startNode } = parseScript(raw);
     if (!startNode) { status.textContent = '✗ Formato non riconosciuto.'; return; }
     let sc = getActiveScript();
-    if (!sc) sc = createNewScript(file.name.replace(/\.[^.]+$/, ''));
+    if (!sc) { sc = createNewScriptObj(file.name.replace(/\.[^.]+$/, '')); scripts.push(sc); }
     sc.nodes = nodes;
     sc.startNode = startNode;
-    saveScripts();
+    await saveScriptToFirestore(sc);
     renderEditor();
-    status.textContent = `✓ Importato: ${Object.keys(nodes).length} nodi da "${file.name}".`;
+    status.textContent = `✓ Importato: ${Object.keys(nodes).length} nodi.`;
     showToast(`Script caricato: ${Object.keys(nodes).length} nodi.`);
   };
   reader.readAsText(file);
 }
-
-function backupAll() {
-  if (scripts.length === 0) { showToast('Nessuno script da salvare.', true); return; }
-  const data = JSON.stringify({ scripts, activeScriptId, exportedAt: new Date().toISOString() }, null, 2);
-  const blob = new Blob([data], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  const date = new Date().toISOString().slice(0,10);
-  a.href = url; a.download = `mentor-script-backup-${date}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast(`Backup salvato: ${scripts.length} script.`);
-}
-
-function restoreBackup(evt) {
-  const file = evt.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    try {
-      const data = JSON.parse(e.target.result);
-      if (!Array.isArray(data.scripts)) throw new Error();
-      if (!confirm(`Ripristinare ${data.scripts.length} script dal backup del ${data.exportedAt?.slice(0,10) || '?'}?\n\nGli script attuali verranno sostituiti.`)) return;
-      scripts = data.scripts;
-      activeScriptId = data.activeScriptId || scripts[0]?.id || '';
-      LS.setStr('cptech_active_script', activeScriptId);
-      saveScripts();
-      renderEditor();
-      showToast(`Ripristinati ${scripts.length} script dal backup.`);
-    } catch { showToast('File non valido. Usa un backup .json creato da qui.', true); }
-  };
-  reader.readAsText(file);
-  evt.target.value = '';
-}
-
 function exportScript() {
   const sc = getActiveScript();
   if (!sc) { showToast('Nessuno script selezionato.', true); return; }
-  const text = serializeScript(sc);
-  const blob = new Blob([text], { type: 'text/plain' });
+  const blob = new Blob([serializeScript(sc)], { type: 'text/plain' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = sc.name.replace(/\s+/g, '_') + '.txt';
   a.click();
   URL.revokeObjectURL(url);
+}
+function backupAll() {
+  if (scripts.length === 0) { showToast('Nessuno script da salvare.', true); return; }
+  const data = JSON.stringify({ scripts, exportedAt: new Date().toISOString() }, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `mentor-script-backup-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast(`Backup salvato: ${scripts.length} script.`);
+}
+async function restoreBackup(evt) {
+  const file = evt.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!Array.isArray(data.scripts)) throw new Error();
+      if (!confirm(`Ripristinare ${data.scripts.length} script dal backup?\nGli script esistenti su Firebase NON vengono eliminati, vengono aggiunti/aggiornati.`)) return;
+      for (const sc of data.scripts) {
+        await saveScriptToFirestore(sc);
+        if (!scripts.find(s => s.id === sc.id)) scripts.push(sc);
+        else Object.assign(scripts.find(s => s.id === sc.id), sc);
+      }
+      renderEditor();
+      showToast(`Ripristinati ${data.scripts.length} script.`);
+    } catch { showToast('File non valido.', true); }
+  };
+  reader.readAsText(file);
+  evt.target.value = '';
 }
 
 // ═══════════════════════════════════════════
@@ -924,7 +1089,6 @@ function renderEditor() {
   populateStartSelect();
   updatePreview();
 }
-
 function renderScriptList() {
   const el = document.getElementById('scriptList');
   el.innerHTML = '';
@@ -948,132 +1112,83 @@ function renderScriptList() {
     el.appendChild(card);
   });
 }
-
-function renameScript(id, newName) {
+function selectScript(id) { activeScriptId = id; renderEditor(); }
+async function deleteScript(id) {
+  if (!confirm('Eliminare questo script? Non si può annullare.')) return;
+  await deleteScriptFromFirestore(id);
+  scripts = scripts.filter(s => s.id !== id);
+  if (activeScriptId === id) activeScriptId = scripts[0]?.id || '';
+  renderEditor();
+  showToast('Script eliminato.');
+}
+async function newScript() {
+  const name = prompt('Nome del nuovo script:');
+  if (!name) return;
+  const sc = createNewScriptObj(name);
+  scripts.push(sc);
+  activeScriptId = sc.id;
+  await saveScriptToFirestore(sc);
+  renderEditor();
+  showToast(`Script "${name}" creato.`);
+}
+function createNewScriptObj(name) {
+  const id = 'sc_' + Date.now();
+  return {
+    id, name, startNode: 'start',
+    nodes: {
+      start: { title: 'Apertura chiamata', phrase: 'Ciao, sono [NOME] e cercavo il titolare.', buttons: [['È il titolare', 'titolare'], ['Non è disponibile', 'richiamata']] },
+      titolare: { title: 'È il titolare', phrase: 'Perfetto. Ho bisogno di un minuto del tuo tempo.', buttons: [['Prosegue', 'start'], ['Non interessa', 'chiusura']] },
+      richiamata: { title: 'Richiamata', phrase: 'Quando posso richiamare?', buttons: [['Fine chiamata', 'start']] },
+      chiusura: { title: 'Chiusura', phrase: 'Grazie per il tempo. Buona giornata.', buttons: [['Nuova chiamata', 'start']] }
+    }
+  };
+}
+async function renameScript(id, newName) {
   newName = newName.trim();
   if (!newName) return;
   const sc = getScript(id);
   if (!sc) return;
   sc.name = newName;
-  saveScripts();
-  // update toolbar label if this is the active script
+  await saveScriptToFirestore(sc);
   if (id === activeScriptId) {
     document.getElementById('currentScriptLabel').textContent = `Script attivo: ${newName}`;
     populateStartSelect();
   }
   showToast(`Script rinominato: "${newName}"`);
 }
-
-function selectScript(id) {
-  activeScriptId = id;
-  LS.setStr('cptech_active_script', id);
-  renderEditor();
-}
-
-function deleteScript(id) {
-  if (!confirm('Eliminare questo script? Non si può annullare.')) return;
-  scripts = scripts.filter(s => s.id !== id);
-  if (activeScriptId === id) activeScriptId = scripts[0]?.id || '';
-  LS.setStr('cptech_active_script', activeScriptId);
-  saveScripts();
-  renderEditor();
-  showToast('Script eliminato.');
-}
-
-function newScript() {
-  const name = prompt('Nome del nuovo script:');
-  if (!name) return;
-  createNewScript(name);
-  renderEditor();
-  showToast(`Script "${name}" creato.`);
-}
-
-function createNewScript(name) {
-  const id = 'sc_' + Date.now();
-  const sc = {
-    id, name,
-    startNode: 'start',
-    nodes: {
-      start: {
-        title: 'Apertura chiamata',
-        phrase: 'Ciao, sono [NOME] e cercavo il titolare.',
-        buttons: [['È il titolare', 'titolare'], ['Non è disponibile', 'richiamata']]
-      },
-      titolare: { title: 'È il titolare', phrase: 'Perfetto. Ho bisogno di un minuto del tuo tempo.', buttons: [['Prosegue', 'start'], ['Non interessa', 'chiusura']] },
-      richiamata: { title: 'Richiamata', phrase: 'Quando posso richiamare?', buttons: [['Fine chiamata', 'start']] },
-      chiusura: { title: 'Chiusura', phrase: 'Grazie per il tempo. Buona giornata.', buttons: [['Nuova chiamata', 'start']] }
-    }
-  };
-  scripts.push(sc);
-  activeScriptId = id;
-  LS.setStr('cptech_active_script', id);
-  saveScripts();
-  return sc;
-}
-
 function renderNodeGrid() {
   const grid = document.getElementById('nodeGrid');
   grid.innerHTML = '';
   const sc = getActiveScript();
-  if (!sc) {
-    grid.innerHTML = '<p style="color:var(--muted);font-size:14px;padding:10px">Seleziona o crea uno script per modificarne i nodi.</p>';
-    return;
-  }
-  const allIds = Object.keys(sc.nodes);
-  allIds.forEach(id => {
-    const node = sc.nodes[id];
-    grid.appendChild(buildNodeCard(sc, id, node, allIds));
-  });
+  if (!sc) { grid.innerHTML = '<p style="color:var(--muted);font-size:14px;padding:10px">Seleziona o crea uno script.</p>'; return; }
+  Object.keys(sc.nodes).forEach(id => { grid.appendChild(buildNodeCard(sc, id, sc.nodes[id], Object.keys(sc.nodes))); });
 }
-
 function buildNodeCard(sc, id, node, allIds) {
   const isStart = id === sc.startNode;
   const card = document.createElement('div');
   card.className = 'nodeCard' + (isStart ? ' is-start' : '');
   card.id = 'nodecard_' + id;
-
   const head = document.createElement('div');
   head.className = 'nodeCardHead';
-  head.innerHTML = `
-    <span class="nodeId">${id}</span>
-    <span class="nodeCardTitle nodeTitle2">${node.title || id}</span>
-    ${isStart ? '<span class="startBadge">START</span>' : ''}
-    <span class="chevron">▶</span>`;
+  head.innerHTML = `<span class="nodeId">${id}</span><span class="nodeCardTitle nodeTitle2">${node.title || id}</span>${isStart ? '<span class="startBadge">START</span>' : ''}<span class="chevron">▶</span>`;
   head.onclick = () => toggleNodeCard(id);
-
   const body = document.createElement('div');
   body.className = 'nodeBody';
   body.id = 'nodebody_' + id;
-
-  // ID input
-  body.innerHTML += `<label>ID nodo (usato nei link dei bottoni)</label>
-    <input type="text" value="${id}" onchange="renameNode('${id}', this.value)" />`;
-
-  // Title
-  body.innerHTML += `<label>Titolo schermata</label>
-    <input type="text" value="${escHtml(node.title)}" oninput="updateNodeField('${id}','title',this.value)" />`;
-
-  // Phrase
-  body.innerHTML += `<label>Frase da leggere</label>
-    <textarea oninput="updateNodeField('${id}','phrase',this.value)">${escHtml(node.phrase)}</textarea>`;
-
-  // Buttons
+  body.innerHTML += `<label>ID nodo</label><input type="text" value="${id}" onchange="renameNode('${id}', this.value)" />`;
+  body.innerHTML += `<label>Titolo schermata</label><input type="text" value="${escHtml(node.title)}" oninput="updateNodeField('${id}','title',this.value)" />`;
+  body.innerHTML += `<label>Frase da leggere</label><textarea oninput="updateNodeField('${id}','phrase',this.value)">${escHtml(node.phrase)}</textarea>`;
   body.innerHTML += `<label>Bottoni di risposta</label>`;
   const btnList = document.createElement('div');
   btnList.className = 'btnList';
   btnList.id = 'btnlist_' + id;
-  (node.buttons || []).forEach((btn, i) => {
-    btnList.appendChild(buildBtnRow(id, i, btn, allIds));
-  });
+  (node.buttons || []).forEach((btn, i) => { btnList.appendChild(buildBtnRow(id, i, btn, allIds)); });
   body.appendChild(btnList);
-
   const addBtn = document.createElement('button');
   addBtn.className = 'addBtnRow';
   addBtn.textContent = '+ Aggiungi bottone';
   addBtn.onclick = () => addButton(id);
   body.appendChild(addBtn);
-
-  // Actions
   const actions = document.createElement('div');
   actions.className = 'nodeActions';
   if (!isStart) {
@@ -1089,186 +1204,207 @@ function buildNodeCard(sc, id, node, allIds) {
   delBtn.onclick = () => deleteNode(id);
   actions.appendChild(delBtn);
   body.appendChild(actions);
-
   card.appendChild(head);
   card.appendChild(body);
   return card;
 }
-
 function buildBtnRow(nodeId, btnIdx, btn, allIds) {
   const row = document.createElement('div');
   row.className = 'btnRow';
   row.dataset.btnIdx = btnIdx;
-
   const labelIn = document.createElement('input');
-  labelIn.type = 'text';
-  labelIn.placeholder = 'Testo bottone';
-  labelIn.value = btn[0];
-  labelIn.oninput = () => updateButton(nodeId, btnIdx, labelIn.value, targetSel.value);
-
+  labelIn.type = 'text'; labelIn.placeholder = 'Testo bottone'; labelIn.value = btn[0];
   const arrow = document.createElement('span');
-  arrow.className = 'arrow';
-  arrow.textContent = '→';
-
+  arrow.className = 'arrow'; arrow.textContent = '→';
   const targetSel = document.createElement('select');
   targetSel.className = 'targetSelect';
-  const specialTargets = ['back'];
-  [...specialTargets, ...allIds].forEach(tid => {
+  ['back', ...allIds].forEach(tid => {
     const opt = document.createElement('option');
-    opt.value = tid;
-    opt.textContent = tid;
+    opt.value = tid; opt.textContent = tid;
     if (tid === btn[1]) opt.selected = true;
     targetSel.appendChild(opt);
   });
+  labelIn.oninput = () => updateButton(nodeId, btnIdx, labelIn.value, targetSel.value);
   targetSel.onchange = () => updateButton(nodeId, btnIdx, labelIn.value, targetSel.value);
-
   const del = document.createElement('button');
-  del.className = 'btnDanger';
-  del.style.padding = '6px 10px';
-  del.textContent = '✕';
+  del.className = 'btnDanger'; del.style.padding = '6px 10px'; del.textContent = '✕';
   del.onclick = () => deleteButton(nodeId, btnIdx);
-
-  row.appendChild(labelIn);
-  row.appendChild(arrow);
-  row.appendChild(targetSel);
-  row.appendChild(del);
+  row.appendChild(labelIn); row.appendChild(arrow); row.appendChild(targetSel); row.appendChild(del);
   return row;
 }
-
 function toggleNodeCard(id) {
   const body = document.getElementById('nodebody_' + id);
   const chevron = document.querySelector(`#nodecard_${id} .chevron`);
   const isOpen = body.classList.toggle('open');
   if (chevron) chevron.classList.toggle('open', isOpen);
 }
-
 function escHtml(str) {
   return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-
 function updateNodeField(id, field, value) {
   const sc = getActiveScript();
   if (!sc || !sc.nodes[id]) return;
   sc.nodes[id][field] = value;
-  // update card title live
   if (field === 'title') {
     const el = document.querySelector(`#nodecard_${id} .nodeCardTitle`);
     if (el) el.textContent = value;
   }
 }
-
 function renameNode(oldId, newId) {
   newId = newId.trim().replace(/\s+/g, '_').toLowerCase();
   if (!newId || newId === oldId) return;
   const sc = getActiveScript();
   if (!sc) return;
   if (sc.nodes[newId]) { showToast('Esiste già un nodo con questo ID.', true); return; }
-  // rename
   sc.nodes[newId] = sc.nodes[oldId];
   delete sc.nodes[oldId];
   if (sc.startNode === oldId) sc.startNode = newId;
-  // fix references in buttons
-  Object.values(sc.nodes).forEach(n => {
-    n.buttons = (n.buttons || []).map(([l, t]) => [l, t === oldId ? newId : t]);
-  });
-  saveScripts();
+  Object.values(sc.nodes).forEach(n => { n.buttons = (n.buttons || []).map(([l, t]) => [l, t === oldId ? newId : t]); });
   renderNodeGrid();
   showToast(`Nodo rinominato: ${oldId} → ${newId}`);
 }
-
 function updateButton(nodeId, btnIdx, label, target) {
   const sc = getActiveScript();
   if (!sc || !sc.nodes[nodeId]) return;
   sc.nodes[nodeId].buttons[btnIdx] = [label, target];
 }
-
 function deleteButton(nodeId, btnIdx) {
   const sc = getActiveScript();
   if (!sc || !sc.nodes[nodeId]) return;
   sc.nodes[nodeId].buttons.splice(btnIdx, 1);
-  saveScripts();
   renderNodeGrid();
 }
-
 function addButton(nodeId) {
   const sc = getActiveScript();
   if (!sc || !sc.nodes[nodeId]) return;
   sc.nodes[nodeId].buttons.push(['Nuovo bottone', sc.startNode || 'start']);
-  saveScripts();
   renderNodeGrid();
-  // re-open the card
   const body = document.getElementById('nodebody_' + nodeId);
   if (body && !body.classList.contains('open')) toggleNodeCard(nodeId);
 }
-
 function addNode() {
   const sc = getActiveScript();
   if (!sc) { showToast('Seleziona prima uno script.', true); return; }
   const id = 'nodo_' + Date.now();
   sc.nodes[id] = { title: 'Nuovo nodo', phrase: '', buttons: [] };
-  saveScripts();
   renderNodeGrid();
-  // open the new card
-  setTimeout(() => {
-    document.getElementById('nodecard_' + id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    toggleNodeCard(id);
-  }, 80);
+  setTimeout(() => { document.getElementById('nodecard_' + id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); toggleNodeCard(id); }, 80);
 }
-
 function deleteNode(id) {
   const sc = getActiveScript();
   if (!sc) return;
   if (id === sc.startNode) { showToast('Non puoi eliminare il nodo di partenza.', true); return; }
   if (!confirm(`Eliminare il nodo "${id}"?`)) return;
   delete sc.nodes[id];
-  saveScripts();
   renderNodeGrid();
   showToast(`Nodo "${id}" eliminato.`);
 }
-
 function setStartNode(id) {
   const sc = getActiveScript();
   if (!sc) return;
   sc.startNode = id;
-  saveScripts();
   renderNodeGrid();
-  showToast(`Nodo di partenza impostato: ${id}`);
+  showToast(`Nodo di partenza: ${id}`);
 }
-
-function saveScript() {
+async function saveScript() {
   const sc = getActiveScript();
   if (!sc) { showToast('Nessuno script selezionato.', true); return; }
-  // collect current textarea values (they're already updated live)
-  saveScripts();
+  await saveScriptToFirestore(sc);
   populateStartSelect();
-  showToast('Script salvato!');
+  showToast('Script salvato su Firebase!');
 }
 
 // ═══════════════════════════════════════════
-// INIT
+// USERS MANAGEMENT
 // ═══════════════════════════════════════════
-(function init() {
-  // If no scripts, seed with the default CP TECH script
-  if (scripts.length === 0) {
-    const defaultScript = {
-      id: 'sc_default',
-      name: 'CP TECH – Script Standard',
-      startNode: 'start',
-      nodes: {"start":{"title":"SCHERMATA 1 – APERTURA","phrase":"Ciao, sono [NOME] di CP TECH di San Marino e cercavo il titolare.","buttons":[["È il titolare","titolare"],["Non è il titolare","non_titolare"]]},"titolare":{"title":"SCHERMATA 2A – È IL TITOLARE","phrase":"Perfetto.\n\nGuarda mi serve solo un minuto del tuo tempo. Hai un minuto?\n\nCon la nostra società ci occupiamo di Cyber sicurezza e sistemi RMM e Il motivo della chiamata è che stiamo completando la selezione di alcuni partner tecnici nella tua zona e volevo capire se possiamo essere in target l'uno per l'altro.","buttons":[["Prosegue","prosegue"],["Chiede info","info"],["Dice manda una mail","manda_mail"],["Dice non ho tempo","non_tempo"],["Dice non mi interessa","non_interessa"]]},"non_titolare":{"title":"SCHERMATA 2B – NON È IL TITOLARE","phrase":"Perfetto.\n\nAvrei bisogno di confrontarmi direttamente con lui perché non si tratta di una proposta commerciale tradizionale, ne di una vendita.\n\nStiamo completando la selezione di alcuni partner tecnici nella vostra zona e abbiamo ancora pochi giorni prima di chiudere gli inserimenti territoriali.\n\nPer correttezza queste informazioni vengono condivise direttamente con il titolare.","buttons":[["Me lo passa","me_lo_passa"],["Chiede info","filtro_chiede_info"],["Dice mandi una mail","filtro_mandi_mail"],["Non è disponibile","filtro_non_disponibile"],["Non interessa","filtro_non_interessa"]]},"prosegue":{"title":"SCHERMATA 3 – TITOLARE PROSEGUE","phrase":"Ti ringrazio.\n\nCome di dicevo CP TECH si occupa di Cyber Security e servizi MSP.\n\nAbbiamo sviluppato un sistema pensato per supportare i tecnici informatici che assistono micro e piccole attività.\n\nPosso chiederti una cosa?\n\nTra i tuoi clienti hai solo privati oppure ti capita di seguire anche piccole attività o professionisti con uno o due computer?","buttons":[["Ha anche aziende/professionisti","aziende"],["Ha solo privati","solo_privati"],["Chiede info","info"],["Dice manda una mail","manda_mail"],["Non vuole proseguire","non_interessa"]]},"aziende":{"title":"SCHERMATA 4A – HA ANCHE AZIENDE / PROFESSIONISTI","phrase":"Perfetto.\n\nTi direi che il mio compito è praticamente finito, perché dovevo solo capire se potevamo essere in target l'uno per l'altro e direi che la risposta è sì.\n\nOra per mostrarti concretamente di cosa si tratta e rispondere alle tue domande di solito fissiamo una breve Zoom di circa 15 minuti con un nostro responsabile.\n\nÈ una call molto pratica e capirai subito se può essere utile sia per te che per i tuoi clienti.","buttons":[["Accetta appuntamento","accetta_app"],["Chiede info prima","info"],["Vuole pensarci","pensarci"],["Dice manda una mail","manda_mail"],["Non interessa","non_interessa"]]},"solo_privati":{"title":"SCHERMATA 4B – HA SOLO PRIVATI","phrase":"Perfetto, ne prendo nota.\n\nIn questo caso il mio lavoro è praticamente finito perché io mi occopo della parte business e non del mercato privati.\n\nTi dico però che è un mercato molto interessante e sicuramente lo conosci già bene.\n\nFarò comunque presente l'informazione a un collega.","buttons":[["Chiudi chiamata","chiusura"],["Ricomincia","start"]]},"accetta_app":{"title":"SCHERMATA 5 – ACCETTA APPUNTAMENTO","phrase":"Perfetto.\n\nControllo soltanto che i dati che ho siano corretti.\n\nMi confermi nome, cognome ed email?","buttons":[["Dati confermati","whatsapp"],["Email diversa","whatsapp"],["Non vuole lasciare dati","whatsapp_no"]]},"whatsapp":{"title":"SCHERMATA 6 – WHATSAPP","phrase":"Hai un numero dove ricevi i messaggi WhatsApp?\n\nUtilizziamo WhatsApp solamente per i promemoria degli appuntamenti e per eventuali comunicazioni operative.","buttons":[["Lascia WhatsApp","fissa_app"],["Dice no","whatsapp_no"],["Chiede perché","whatsapp_perche"]]},"whatsapp_no":{"title":"SCHERMATA 6A – DICE NO A WHATSAPP","phrase":"Nessun problema.\n\nTi chiedo solo di controllare la mail perché riceverai lì tutte le informazioni relative all'appuntamento.","buttons":[["Fissa appuntamento","fissa_app"]]},"whatsapp_perche":{"title":"SCHERMATA 6B – CHIEDE PERCHÉ WHATSAPP","phrase":"Lo usiamo solo per comunicazioni operative legate all'appuntamento, come promemoria o eventuali variazioni.\n\nNon inviamo spam e non utilizziamo il numero per comunicazioni commerciali generiche.","buttons":[["Lascia WhatsApp","fissa_app"],["Dice no","whatsapp_no"],["Fissa appuntamento","fissa_app"]]},"fissa_app":{"title":"SCHERMATA 7 – FISSARE APPUNTAMENTO","phrase":"Perfetto.\n\nGuardiamo insieme lo slot migliore.\n\nHai preferenza per mattina o pomeriggio?","buttons":[["Appuntamento fissato","chiusura_app"],["Vuole richiamata","richiamata"],["Non trova disponibilità","richiamata"]]},"chiusura_app":{"title":"SCHERMATA 8 – CHIUSURA APPUNTAMENTO","phrase":"Perfetto [NOME].\n\nAllora ho fissato [GIORNO] alle [ORE].\n\nTi sta già arrivando il promemoria via mail e te lo puoi mettere in calendario e, se lo hai lasciato, anche via WhatsApp.\n\nNon devi preparare nulla: ti mostreremo semplicemente come stanno lavorando oggi i nostri partner e poi sarai tu a valutare se può avere senso approfondire.\n\nGrazie del tempo che mi hai dedicato e a presto.","buttons":[["Fine chiamata","start"],["Nuova chiamata","start"]]},"info":{"title":"OBIEZIONE – CHIEDE INFO","phrase":"Certo, ti spiego in modo molto semplice.\n\nNoi lavoriamo nel mondo della Cyber Security e dei servizi gestiti.\n\nNegli ultimi anni gli attacchi informatici verso piccole imprese e professionisti sono aumentati molto.\n\nMolti clienti pensano di essere troppo piccoli per essere colpiti, ma spesso è proprio il contrario.\n\nPer questo abbiamo sviluppato una piattaforma che permette ai tecnici informatici di offrire un livello di protezione più avanzato anche a micro e piccole attività.\n\nIn pratica è come avere un reparto IT e Cyber Security sempre attivo, ma con costi sostenibili anche per realtà da uno a venti computer.\n\nIl punto però non è spiegarti tutto ora al telefono.\n\nLa cosa più utile è mostrartelo in una Zoom di 15 minuti, così capisci subito se può essere utile per te e per i tuoi clienti.","buttons":[["Accetta appuntamento","accetta_app"],["Chiede costo","costo"],["Dice manda una mail","manda_mail"],["Dice non interessa","non_interessa"],["Vuole pensarci","pensarci"]]},"manda_mail":{"title":"OBIEZIONE – MANDA UNA MAIL","phrase":"Volentieri.\n\nLa mail però spiega solo in modo generale chi siamo e cosa facciamo.\n\nIl motivo per cui ti sto chiamando riguarda una possibile collaborazione territoriale e alcune informazioni operative che ha senso condividere direttamente.\n\nPer capire se può interessarti bastano davvero 15 minuti in Zoom.\n\nSe poi non ha senso, ci salutiamo tranquillamente.","buttons":[["Accetta appuntamento","accetta_app"],["Insiste per mail","insiste_mail"],["Dice non interessa","non_interessa"],["Vuole pensarci","pensarci"]]},"insiste_mail":{"title":"OBIEZIONE – INSISTE PER MAIL","phrase":"Va bene, nessun problema.\n\nTi mando una comunicazione generica, ma ti dico con trasparenza che non contiene tutte le informazioni relative alla selezione partner.\n\nPer quelle serve un confronto diretto con il titolare.\n\nQual è la mail corretta?","buttons":[["Email raccolta","chiusura"],["Non lascia email","chiusura"]]},"non_tempo":{"title":"OBIEZIONE – NON HO TEMPO","phrase":"Capisco perfettamente.\n\nInfatti non voglio portarti via tempo adesso.\n\nLa chiamata serviva solo a capire se potevamo essere in target.\n\nSe mi dici che segui anche piccole attività o professionisti, ti propongo direttamente una Zoom di 15 minuti in un momento più comodo.\n\nMeglio mattina o pomeriggio?","buttons":[["Mattina","fissa_app"],["Pomeriggio","fissa_app"],["Vuole richiamata","richiamata"],["Dice manda una mail","manda_mail"],["Non interessa","non_interessa"]]},"non_interessa":{"title":"OBIEZIONE – NON MI INTERESSA","phrase":"Nessun problema.\n\nTe lo chiedo solo per capire: non ti interessa perché hai già una soluzione simile oppure perché oggi non stai lavorando con clienti aziendali?","buttons":[["Ha già soluzione","gia_soluzione"],["Non lavora con aziende","non_lavora_aziende"],["Non vuole spiegare","chiusura"],["Si riapre conversazione","prosegue"]]},"gia_soluzione":{"title":"OBIEZIONE – HA GIÀ SOLUZIONE","phrase":"Perfetto, anzi è positivo.\n\nSignifica che il tema lo conosci già.\n\nIl punto non è sostituire quello che usi oggi, ma capire se il nostro modello può darti qualcosa in più a livello operativo, commerciale o di supporto sui clienti piccoli.\n\nPer questo ha senso vederlo in 15 minuti.","buttons":[["Accetta appuntamento","accetta_app"],["Vuole pensarci","pensarci"],["Dice manda una mail","manda_mail"],["Non interessa","non_interessa"]]},"non_lavora_aziende":{"title":"OBIEZIONE – NON LAVORA CON AZIENDE","phrase":"Perfetto, allora probabilmente non siamo in target in questo momento.\n\nTi ringrazio comunque per il tempo.\n\nMi segno che lavori principalmente con privati.","buttons":[["Chiudi chiamata","chiusura"],["Ricomincia","start"]]},"pensarci":{"title":"OBIEZIONE – VUOLE PENSARCI","phrase":"Assolutamente.\n\nProprio per questo la Zoom non serve a farti decidere subito, ma a darti le informazioni corrette.\n\nSono 15 minuti molto pratici.\n\nDopo la call potrai valutare con calma se può avere senso oppure no.","buttons":[["Accetta appuntamento","accetta_app"],["Vuole mail prima","manda_mail"],["Vuole richiamata","richiamata"],["Non interessa","non_interessa"]]},"costo":{"title":"OBIEZIONE – CHIEDE COSTO","phrase":"Il costo è una delle ultime cose da valutare perché dipende da come il servizio viene utilizzato e dal tipo di collaborazione.\n\nPrima dobbiamo capire se può avere senso per te e per i tuoi clienti.\n\nSe non c'è utilità, il prezzo non conta.\n\nPer questo fissiamo una Zoom di 15 minuti e poi valuti tutto con informazioni corrette.","buttons":[["Accetta appuntamento","accetta_app"],["Dice manda una mail","manda_mail"],["Vuole pensarci","pensarci"],["Non interessa","non_interessa"]]},"me_lo_passa":{"title":"FILTRO – ME LO PASSA","phrase":"Grazie, gentilissima/o.","buttons":[["Quando risponde il titolare","titolare"]]},"filtro_non_disponibile":{"title":"FILTRO – NON È DISPONIBILE","phrase":"Nessun problema.\n\nQuando pensa che possa essere più facile trovarlo?\n\nPreferisco richiamarlo direttamente perché stiamo completando le valutazioni territoriali proprio in questi giorni.","buttons":[["Richiamare più tardi","richiamata"],["Lascia contatto diretto","richiamata"],["Dice mandi una mail","filtro_mandi_mail"],["Chiudi chiamata","chiusura"]]},"filtro_non_interessa":{"title":"FILTRO – NON INTERESSA","phrase":"Capisco.\n\nPer correttezza però preferirei non archiviare la cosa senza aver parlato con il titolare.\n\nNon è una proposta commerciale tradizionale, ne una vendita, ma una possibile collaborazione territoriale.\n\nQuando posso trovarlo disponibile anche solo per pochi minuti?","buttons":[["Dà orario richiamata","richiamata"],["Dice mandi una mail","filtro_mandi_mail"],["Insiste non interessa","chiusura"],["Chiudi chiamata","chiusura"]]},"filtro_chiede_info":{"title":"FILTRO – CHIEDE INFO","phrase":"Certo.\n\nLe posso dire solo che riguarda una possibile collaborazione territoriale con tecnici informatici della zona.\n\nNon è una vendita e non riguarda merce da acquistare.\n\nPer correttezza però preferiamo condividere i dettagli direttamente con il titolare, perché ci sono informazioni operative che devono essere valutate da chi prende le decisioni.","buttons":[["Me lo passa","me_lo_passa"],["Non disponibile","filtro_non_disponibile"],["Dice mandi una mail","filtro_mandi_mail"],["Insiste per info","filtro_insiste_info"]]},"filtro_insiste_info":{"title":"FILTRO – INSISTE PER INFO","phrase":"Capisco perfettamente.\n\nIl punto è che se le dessi qualche informazione al volo rischierei di essere incompleto.\n\nStiamo selezionando alcuni partner tecnici nella zona e le informazioni importanti riguardano modalità operative, territorio e collaborazione.\n\nPer questo è meglio parlarne direttamente con il titolare.","buttons":[["Me lo passa","me_lo_passa"],["Non disponibile","filtro_non_disponibile"],["Dice mandi una mail","filtro_mandi_mail"],["Chiudi chiamata","chiusura"]]},"filtro_mandi_mail":{"title":"FILTRO – MANDI UNA MAIL","phrase":"Volentieri.\n\nProbabilmente una comunicazione informativa è già stata inviata oppure arriverà a breve.\n\nTuttavia le informazioni più importanti non sono nella mail, perché riguardano aspetti operativi e opportunità territoriali che devono essere valutati direttamente dal titolare.\n\nPer questo preferirei confrontarmi con lui anche solo per pochi minuti.","buttons":[["Me lo passa","me_lo_passa"],["Non disponibile","filtro_non_disponibile"],["Insiste per mail","filtro_insiste_mail"],["Chiudi chiamata","chiusura"]]},"filtro_insiste_mail":{"title":"FILTRO – INSISTE PER MAIL","phrase":"Va bene.\n\nMi conferma qual è la mail migliore per far arrivare una comunicazione al titolare?\n\nLe anticipo solo che sarà una comunicazione generale, mentre le informazioni operative vengono condivise direttamente con lui.","buttons":[["Email raccolta","chiusura"],["Non lascia email","chiusura"],["Chiudi chiamata","chiusura"]]},"richiamata":{"title":"RICHIAMATA","phrase":"Perfetto.\n\nMi segno di richiamare [NOME TITOLARE] [GIORNO/ORARIO].\n\nGrazie e buona giornata.","buttons":[["Fine chiamata","start"],["Nuova chiamata","start"]]},"chiusura":{"title":"CHIUSURA CORDIALE GENERICA","phrase":"Perfetto, la ringrazio per il tempo.\n\nLe auguro buona giornata.","buttons":[["Fine chiamata","start"],["Nuova chiamata","start"]]}}
-    };
-    scripts.push(defaultScript);
-    activeScriptId = defaultScript.id;
-    LS.setStr('cptech_active_script', activeScriptId);
-    saveScripts();
-  } else if (!activeScriptId && scripts.length > 0) {
-    activeScriptId = scripts[0].id;
-    LS.setStr('cptech_active_script', activeScriptId);
+async function renderUsersList() {
+  const el = document.getElementById('usersList');
+  el.innerHTML = '<p class="noUsers">Caricamento utenti...</p>';
+  try {
+    const snap = await db.collection('users').get();
+    const users = snap.docs.map(d => ({ uid: d.id, ...d.data() })).filter(u => u.email !== ADMIN_EMAIL);
+    if (users.length === 0) {
+      el.innerHTML = '<p class="noUsers">Nessun commerciale registrato ancora.<br>I commerciali si registrano autonomamente sul sito e appaiono qui.</p>';
+      return;
+    }
+    el.innerHTML = '';
+    users.forEach(u => el.appendChild(buildUserCard(u)));
+  } catch(e) {
+    el.innerHTML = '<p class="noUsers" style="color:var(--danger)">Errore nel caricamento. Controlla le regole Firestore.</p>';
+    console.error(e);
   }
-  populateStartSelect();
-  updatePreview();
-  applyTheme();
-  initResize();
-})();
+}
+
+function buildUserCard(u) {
+  const card = document.createElement('div');
+  card.className = 'userCard';
+  card.id = 'ucard_' + u.uid;
+  const initials = (u.name || u.email || '?').slice(0, 2).toUpperCase();
+  const statusLabel = u.enabled ? 'Abilitato' : 'In attesa';
+  const statusClass = u.enabled ? 'enabled' : 'pending';
+  const toggleLabel = u.enabled ? 'Disabilita' : 'Abilita';
+  const toggleClass = u.enabled ? 'disable' : 'enable';
+
+  const assigned = u.assignedScripts || [];
+  const scriptChecks = scripts.map(sc => `
+    <label class="scriptCheck">
+      <input type="checkbox" ${assigned.includes(sc.id) ? 'checked' : ''} onchange="toggleScriptAssign('${u.uid}','${sc.id}',this.checked)" />
+      ${escHtml(sc.name)}
+    </label>`).join('');
+
+  card.innerHTML = `
+    <div class="userCardTop">
+      <div class="userAvatar">${initials}</div>
+      <div class="userInfo">
+        <div class="uName">${escHtml(u.name || '—')}</div>
+        <div class="uEmail">${escHtml(u.email || '')}</div>
+      </div>
+      <span class="userStatus ${statusClass}">${statusLabel}</span>
+      <button class="toggleEnableBtn ${toggleClass}" onclick="toggleUserEnabled('${u.uid}', ${u.enabled})">${toggleLabel}</button>
+    </div>
+    <div class="scriptAssign">
+      <h4>Script assegnati</h4>
+      <div class="scriptCheckList">${scriptChecks || '<span style="color:var(--muted);font-size:13px">Nessuno script disponibile</span>'}</div>
+    </div>`;
+  return card;
+}
+
+async function toggleUserEnabled(uid, currentEnabled) {
+  const newVal = !currentEnabled;
+  await db.collection('users').doc(uid).update({ enabled: newVal });
+  showToast(newVal ? 'Utente abilitato.' : 'Utente disabilitato.');
+  renderUsersList();
+}
+
+async function toggleScriptAssign(uid, scriptId, checked) {
+  const ref = db.collection('users').doc(uid);
+  const snap = await ref.get();
+  const assigned = snap.data()?.assignedScripts || [];
+  let updated;
+  if (checked) {
+    updated = assigned.includes(scriptId) ? assigned : [...assigned, scriptId];
+  } else {
+    updated = assigned.filter(id => id !== scriptId);
+  }
+  await ref.update({ assignedScripts: updated });
+  showToast('Script aggiornati.');
+}
+
+// ═══════════════════════════════════════════
+// SEED DEFAULT SCRIPT
+// ═══════════════════════════════════════════
+async function seedDefaultScript() {
+  const defaultScript = {
+    id: 'sc_default',
+    name: 'CP TECH – Script Standard',
+    startNode: 'start',
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    nodes: {"start":{"title":"SCHERMATA 1 – APERTURA","phrase":"Ciao, sono [NOME] di CP TECH di San Marino e cercavo il titolare.","buttons":[["È il titolare","titolare"],["Non è il titolare","non_titolare"]]},"titolare":{"title":"SCHERMATA 2A – È IL TITOLARE","phrase":"Perfetto.\n\nGuarda mi serve solo un minuto del tuo tempo. Hai un minuto?\n\nCon la nostra società ci occupiamo di Cyber sicurezza e sistemi RMM e Il motivo della chiamata è che stiamo completando la selezione di alcuni partner tecnici nella tua zona e volevo capire se possiamo essere in target l'uno per l'altro.","buttons":[["Prosegue","prosegue"],["Chiede info","info"],["Dice manda una mail","manda_mail"],["Dice non ho tempo","non_tempo"],["Dice non mi interessa","non_interessa"]]},"non_titolare":{"title":"SCHERMATA 2B – NON È IL TITOLARE","phrase":"Perfetto.\n\nAvrei bisogno di confrontarmi direttamente con lui perché non si tratta di una proposta commerciale tradizionale, ne di una vendita.\n\nStiamo completando la selezione di alcuni partner tecnici nella vostra zona e abbiamo ancora pochi giorni prima di chiudere gli inserimenti territoriali.\n\nPer correttezza queste informazioni vengono condivise direttamente con il titolare.","buttons":[["Me lo passa","me_lo_passa"],["Chiede info","filtro_chiede_info"],["Dice mandi una mail","filtro_mandi_mail"],["Non è disponibile","filtro_non_disponibile"],["Non interessa","filtro_non_interessa"]]},"prosegue":{"title":"SCHERMATA 3 – TITOLARE PROSEGUE","phrase":"Ti ringrazio.\n\nCome di dicevo CP TECH si occupa di Cyber Security e servizi MSP.\n\nAbbiamo sviluppato un sistema pensato per supportare i tecnici informatici che assistono micro e piccole attività.\n\nPosso chiederti una cosa?\n\nTra i tuoi clienti hai solo privati oppure ti capita di seguire anche piccole attività o professionisti con uno o due computer?","buttons":[["Ha anche aziende/professionisti","aziende"],["Ha solo privati","solo_privati"],["Chiede info","info"],["Dice manda una mail","manda_mail"],["Non vuole proseguire","non_interessa"]]},"aziende":{"title":"SCHERMATA 4A – HA ANCHE AZIENDE","phrase":"Perfetto.\n\nTi direi che il mio compito è praticamente finito, perché dovevo solo capire se potevamo essere in target l'uno per l'altro e direi che la risposta è sì.\n\nOra per mostrarti concretamente di cosa si tratta e rispondere alle tue domande di solito fissiamo una breve Zoom di circa 15 minuti con un nostro responsabile.\n\nÈ una call molto pratica e capirai subito se può essere utile sia per te che per i tuoi clienti.","buttons":[["Accetta appuntamento","accetta_app"],["Chiede info prima","info"],["Vuole pensarci","pensarci"],["Dice manda una mail","manda_mail"],["Non interessa","non_interessa"]]},"solo_privati":{"title":"SCHERMATA 4B – HA SOLO PRIVATI","phrase":"Perfetto, ne prendo nota.\n\nIn questo caso il mio lavoro è praticamente finito perché io mi occupo della parte business e non del mercato privati.\n\nFarò comunque presente l'informazione a un collega.","buttons":[["Chiudi chiamata","chiusura"],["Ricomincia","start"]]},"accetta_app":{"title":"SCHERMATA 5 – ACCETTA APPUNTAMENTO","phrase":"Perfetto.\n\nControllo soltanto che i dati che ho siano corretti.\n\nMi confermi nome, cognome ed email?","buttons":[["Dati confermati","whatsapp"],["Email diversa","whatsapp"],["Non vuole lasciare dati","whatsapp_no"]]},"whatsapp":{"title":"SCHERMATA 6 – WHATSAPP","phrase":"Hai un numero dove ricevi i messaggi WhatsApp?\n\nUtilizziamo WhatsApp solamente per i promemoria degli appuntamenti e per eventuali comunicazioni operative.","buttons":[["Lascia WhatsApp","fissa_app"],["Dice no","whatsapp_no"],["Chiede perché","whatsapp_perche"]]},"whatsapp_no":{"title":"SCHERMATA 6A – DICE NO A WHATSAPP","phrase":"Nessun problema.\n\nTi chiedo solo di controllare la mail perché riceverai lì tutte le informazioni relative all'appuntamento.","buttons":[["Fissa appuntamento","fissa_app"]]},"whatsapp_perche":{"title":"SCHERMATA 6B – CHIEDE PERCHÉ WHATSAPP","phrase":"Lo usiamo solo per comunicazioni operative legate all'appuntamento, come promemoria o eventuali variazioni.\n\nNon inviamo spam e non utilizziamo il numero per comunicazioni commerciali generiche.","buttons":[["Lascia WhatsApp","fissa_app"],["Dice no","whatsapp_no"]]},"fissa_app":{"title":"SCHERMATA 7 – FISSARE APPUNTAMENTO","phrase":"Perfetto.\n\nGuardiamo insieme lo slot migliore.\n\nHai preferenza per mattina o pomeriggio?","buttons":[["Appuntamento fissato","chiusura_app"],["Vuole richiamata","richiamata"],["Non trova disponibilità","richiamata"]]},"chiusura_app":{"title":"SCHERMATA 8 – CHIUSURA APPUNTAMENTO","phrase":"Perfetto [NOME].\n\nAllora ho fissato [GIORNO] alle [ORE].\n\nTi sta già arrivando il promemoria via mail e te lo puoi mettere in calendario.\n\nNon devi preparare nulla: ti mostreremo semplicemente come stanno lavorando oggi i nostri partner.\n\nGrazie del tempo e a presto.","buttons":[["Fine chiamata","start"],["Nuova chiamata","start"]]},"info":{"title":"OBIEZIONE – CHIEDE INFO","phrase":"Certo, ti spiego in modo molto semplice.\n\nNoi lavoriamo nel mondo della Cyber Security e dei servizi gestiti.\n\nPer questo abbiamo sviluppato una piattaforma che permette ai tecnici informatici di offrire un livello di protezione più avanzato anche a micro e piccole attività.\n\nIl punto però non è spiegarti tutto ora al telefono.\n\nLa cosa più utile è mostrartelo in una Zoom di 15 minuti, così capisci subito se può essere utile per te e per i tuoi clienti.","buttons":[["Accetta appuntamento","accetta_app"],["Chiede costo","costo"],["Dice manda una mail","manda_mail"],["Dice non interessa","non_interessa"],["Vuole pensarci","pensarci"]]},"manda_mail":{"title":"OBIEZIONE – MANDA UNA MAIL","phrase":"Volentieri.\n\nLa mail però spiega solo in modo generale chi siamo e cosa facciamo.\n\nPer capire se può interessarti bastano davvero 15 minuti in Zoom.\n\nSe poi non ha senso, ci salutiamo tranquillamente.","buttons":[["Accetta appuntamento","accetta_app"],["Insiste per mail","insiste_mail"],["Dice non interessa","non_interessa"],["Vuole pensarci","pensarci"]]},"insiste_mail":{"title":"OBIEZIONE – INSISTE PER MAIL","phrase":"Va bene, nessun problema.\n\nTi mando una comunicazione generica.\n\nQual è la mail corretta?","buttons":[["Email raccolta","chiusura"],["Non lascia email","chiusura"]]},"non_tempo":{"title":"OBIEZIONE – NON HO TEMPO","phrase":"Capisco perfettamente.\n\nInfatti non voglio portarti via tempo adesso.\n\nSe mi dici che segui anche piccole attività o professionisti, ti propongo direttamente una Zoom di 15 minuti in un momento più comodo.\n\nMeglio mattina o pomeriggio?","buttons":[["Mattina","fissa_app"],["Pomeriggio","fissa_app"],["Vuole richiamata","richiamata"],["Dice manda una mail","manda_mail"],["Non interessa","non_interessa"]]},"non_interessa":{"title":"OBIEZIONE – NON MI INTERESSA","phrase":"Nessun problema.\n\nTe lo chiedo solo per capire: non ti interessa perché hai già una soluzione simile oppure perché oggi non stai lavorando con clienti aziendali?","buttons":[["Ha già soluzione","gia_soluzione"],["Non lavora con aziende","non_lavora_aziende"],["Non vuole spiegare","chiusura"],["Si riapre conversazione","prosegue"]]},"gia_soluzione":{"title":"OBIEZIONE – HA GIÀ SOLUZIONE","phrase":"Perfetto, anzi è positivo.\n\nSignifica che il tema lo conosci già.\n\nIl punto non è sostituire quello che usi oggi, ma capire se il nostro modello può darti qualcosa in più.\n\nPer questo ha senso vederlo in 15 minuti.","buttons":[["Accetta appuntamento","accetta_app"],["Vuole pensarci","pensarci"],["Dice manda una mail","manda_mail"],["Non interessa","non_interessa"]]},"non_lavora_aziende":{"title":"OBIEZIONE – NON LAVORA CON AZIENDE","phrase":"Perfetto, allora probabilmente non siamo in target in questo momento.\n\nTi ringrazio comunque per il tempo.","buttons":[["Chiudi chiamata","chiusura"],["Ricomincia","start"]]},"pensarci":{"title":"OBIEZIONE – VUOLE PENSARCI","phrase":"Assolutamente.\n\nProprio per questo la Zoom non serve a farti decidere subito, ma a darti le informazioni corrette.\n\nSono 15 minuti molto pratici.\n\nDopo la call potrai valutare con calma.","buttons":[["Accetta appuntamento","accetta_app"],["Vuole mail prima","manda_mail"],["Vuole richiamata","richiamata"],["Non interessa","non_interessa"]]},"costo":{"title":"OBIEZIONE – CHIEDE COSTO","phrase":"Il costo è una delle ultime cose da valutare perché dipende da come il servizio viene utilizzato.\n\nPrima dobbiamo capire se può avere senso per te e per i tuoi clienti.\n\nPer questo fissiamo una Zoom di 15 minuti e poi valuti tutto con informazioni corrette.","buttons":[["Accetta appuntamento","accetta_app"],["Dice manda una mail","manda_mail"],["Vuole pensarci","pensarci"],["Non interessa","non_interessa"]]},"me_lo_passa":{"title":"FILTRO – ME LO PASSA","phrase":"Grazie, gentilissima/o.","buttons":[["Quando risponde il titolare","titolare"]]},"filtro_non_disponibile":{"title":"FILTRO – NON È DISPONIBILE","phrase":"Nessun problema.\n\nQuando pensa che possa essere più facile trovarlo?\n\nPreferisco richiamarlo direttamente perché stiamo completando le valutazioni territoriali proprio in questi giorni.","buttons":[["Richiamare più tardi","richiamata"],["Lascia contatto diretto","richiamata"],["Dice mandi una mail","filtro_mandi_mail"],["Chiudi chiamata","chiusura"]]},"filtro_non_interessa":{"title":"FILTRO – NON INTERESSA","phrase":"Capisco.\n\nPer correttezza però preferirei non archiviare la cosa senza aver parlato con il titolare.\n\nQuando posso trovarlo disponibile anche solo per pochi minuti?","buttons":[["Dà orario richiamata","richiamata"],["Dice mandi una mail","filtro_mandi_mail"],["Insiste non interessa","chiusura"]]},"filtro_chiede_info":{"title":"FILTRO – CHIEDE INFO","phrase":"Certo.\n\nLe posso dire solo che riguarda una possibile collaborazione territoriale con tecnici informatici della zona.\n\nNon è una vendita e non riguarda merce da acquistare.\n\nPer correttezza però preferiamo condividere i dettagli direttamente con il titolare.","buttons":[["Me lo passa","me_lo_passa"],["Non disponibile","filtro_non_disponibile"],["Dice mandi una mail","filtro_mandi_mail"]]},"filtro_mandi_mail":{"title":"FILTRO – MANDI UNA MAIL","phrase":"Volentieri.\n\nTuttavia le informazioni più importanti non sono nella mail, perché riguardano aspetti operativi che devono essere valutati direttamente dal titolare.\n\nPer questo preferirei confrontarmi con lui anche solo per pochi minuti.","buttons":[["Me lo passa","me_lo_passa"],["Non disponibile","filtro_non_disponibile"],["Chiudi chiamata","chiusura"]]},"richiamata":{"title":"RICHIAMATA","phrase":"Perfetto.\n\nMi segno di richiamare [NOME TITOLARE] [GIORNO/ORARIO].\n\nGrazie e buona giornata.","buttons":[["Fine chiamata","start"],["Nuova chiamata","start"]]},"chiusura":{"title":"CHIUSURA CORDIALE","phrase":"Perfetto, la ringrazio per il tempo.\n\nLe auguro buona giornata.","buttons":[["Fine chiamata","start"],["Nuova chiamata","start"]]}}
+  };
+  await db.collection('scripts').doc('sc_default').set(defaultScript);
+  scripts.push(defaultScript);
+  activeScriptId = 'sc_default';
+}
 </script>
 </body>
 </html>

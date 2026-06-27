@@ -291,6 +291,15 @@ body.compact textarea{min-height:105px}
         Accedi con Google
       </button>
       <div class="loginSwitch">Non hai un account? <a onclick="showRegister()">Registrati</a></div>
+      <div class="loginSwitch" style="margin-top:8px">Password dimenticata? <a onclick="showForgot()">Recupera</a></div>
+    </div>
+
+    <!-- Forgot password form -->
+    <div id="formForgot" class="hidden">
+      <input id="forgotEmail" class="loginField" type="email" placeholder="La tua email" autocomplete="email"
+        onkeydown="if(event.key==='Enter')doForgot()" />
+      <button class="btnLogin" onclick="doForgot()">Invia email di recupero</button>
+      <div class="loginSwitch">Ricordi la password? <a onclick="showLogin()">Accedi</a></div>
     </div>
 
     <!-- Register form -->
@@ -654,14 +663,35 @@ function setLoginErr(msg) { document.getElementById('loginErr').textContent = ms
 function showRegister() {
   document.getElementById('formLogin').classList.add('hidden');
   document.getElementById('formRegister').classList.remove('hidden');
+  document.getElementById('formForgot').classList.add('hidden');
   document.getElementById('loginSubtitle').textContent = 'Crea il tuo account';
   setLoginErr('');
 }
 function showLogin() {
   document.getElementById('formRegister').classList.add('hidden');
+  document.getElementById('formForgot').classList.add('hidden');
   document.getElementById('formLogin').classList.remove('hidden');
   document.getElementById('loginSubtitle').textContent = 'Accedi per continuare';
   setLoginErr('');
+}
+function showForgot() {
+  document.getElementById('formLogin').classList.add('hidden');
+  document.getElementById('formRegister').classList.add('hidden');
+  document.getElementById('formForgot').classList.remove('hidden');
+  document.getElementById('loginSubtitle').textContent = 'Recupera password';
+  setLoginErr('');
+}
+async function doForgot() {
+  const email = document.getElementById('forgotEmail').value.trim();
+  if (!email) { setLoginErr('Inserisci la tua email.'); return; }
+  try {
+    await auth.sendPasswordResetEmail(email);
+    setLoginErr('');
+    document.getElementById('loginSubtitle').textContent = 'Email inviata! Controlla la tua casella.';
+    document.getElementById('formForgot').classList.add('hidden');
+  } catch(e) {
+    setLoginErr('Errore: ' + (e.message || 'email non trovata'));
+  }
 }
 
 // ═══════════════════════════════════════════

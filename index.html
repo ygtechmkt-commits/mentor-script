@@ -539,6 +539,7 @@ auth.onAuthStateChanged(async user => {
     } catch(e) {
       console.error(e);
       showScreen('login');
+      setLoginErr('Errore interno: ' + (e.message || e.code || JSON.stringify(e)));
     }
   } else {
     currentUser = null;

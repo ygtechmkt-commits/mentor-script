@@ -332,6 +332,11 @@ body.compact textarea{min-height:105px}
       <h3 id="currentScriptLabel">Nessuno script selezionato</h3>
       <button class="btnSecondary" onclick="newScript()">+ Nuovo script</button>
       <button class="btnGreen" onclick="exportScript()">⬇ Esporta .txt</button>
+      <button class="btnPrimary" onclick="backupAll()">💾 Backup tutti</button>
+      <div class="fileInputWrap">
+        <button class="btnSecondary">📂 Ripristina backup</button>
+        <input type="file" accept=".json" onchange="restoreBackup(event)" />
+      </div>
     </div>
 
     <div class="scriptList" id="scriptList"></div>
@@ -860,6 +865,40 @@ function loadFile(evt) {
     showToast(`Script caricato: ${Object.keys(nodes).length} nodi.`);
   };
   reader.readAsText(file);
+}
+
+function backupAll() {
+  if (scripts.length === 0) { showToast('Nessuno script da salvare.', true); return; }
+  const data = JSON.stringify({ scripts, activeScriptId, exportedAt: new Date().toISOString() }, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const date = new Date().toISOString().slice(0,10);
+  a.href = url; a.download = `mentor-script-backup-${date}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast(`Backup salvato: ${scripts.length} script.`);
+}
+
+function restoreBackup(evt) {
+  const file = evt.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!Array.isArray(data.scripts)) throw new Error();
+      if (!confirm(`Ripristinare ${data.scripts.length} script dal backup del ${data.exportedAt?.slice(0,10) || '?'}?\n\nGli script attuali verranno sostituiti.`)) return;
+      scripts = data.scripts;
+      activeScriptId = data.activeScriptId || scripts[0]?.id || '';
+      LS.setStr('cptech_active_script', activeScriptId);
+      saveScripts();
+      renderEditor();
+      showToast(`Ripristinati ${scripts.length} script dal backup.`);
+    } catch { showToast('File non valido. Usa un backup .json creato da qui.', true); }
+  };
+  reader.readAsText(file);
+  evt.target.value = '';
 }
 
 function exportScript() {

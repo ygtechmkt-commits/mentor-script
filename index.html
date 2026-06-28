@@ -448,7 +448,7 @@ body.compact textarea{min-height:105px}
         <div class="box">
           <div class="savedRow">
             <span>📁 Salvati oggi: <strong id="savedCount">0</strong></span>
-            <button class="smallBtn btnDownload" onclick="downloadPDF()">⬇ Scarica PDF</button>
+            <button class="smallBtn btnDownload" onclick="downloadPDF()">⬇ Scarica Word</button>
           </div>
         </div>
       </aside>
@@ -996,36 +996,41 @@ function clearContactForm(clearStatus = true) {
 function downloadPDF() {
   if (savedContacts.length === 0) { alert('Nessun contatto salvato da scaricare.'); return; }
   const rows = savedContacts.map((c, i) => `
-    <div class="record">
-      <div class="rec-num">#${i + 1} — ${c.data} ${c.ora} — ${c.commerciale}</div>
-      <table>
-        <tr><td>Nome</td><td>${c.nome} ${c.cognome}</td><td>Azienda</td><td>${c.azienda}</td></tr>
-        <tr><td>Telefono</td><td>${c.telefono}</td><td>Cellulare</td><td>${c.cellulare}</td></tr>
-        <tr><td>Email</td><td colspan="3">${c.mail}</td></tr>
-        <tr><td>Esito</td><td colspan="3"><strong>${c.esito}</strong></td></tr>
-        ${c.note ? `<tr><td>Note</td><td colspan="3">${c.note.replace(/\n/g,'<br>')}</td></tr>` : ''}
-      </table>
-    </div>`).join('');
-  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Report Chiamate</title>
-  <style>
-    body{font-family:Arial,sans-serif;font-size:13px;color:#111;padding:30px}
-    h1{font-size:20px;margin-bottom:4px}
-    .sub{color:#555;margin-bottom:24px;font-size:12px}
-    .record{border:1px solid #ccc;border-radius:8px;padding:14px;margin-bottom:16px;page-break-inside:avoid}
-    .rec-num{font-weight:bold;color:#0066aa;margin-bottom:8px;font-size:12px}
-    table{width:100%;border-collapse:collapse}
-    td{padding:5px 8px;border-bottom:1px solid #eee;vertical-align:top}
-    td:first-child,td:nth-child(3){color:#555;font-size:11px;width:80px;white-space:nowrap}
-  </style></head><body>
-  <h1>Report Chiamate — CP TECH</h1>
-  <div class="sub">Data: ${new Date().toLocaleDateString('it-IT')} — ${savedContacts.length} contatti</div>
+    <tr>
+      <td style="background:#f0f6ff;font-weight:bold;padding:6pt 8pt;border:1pt solid #ccc">#${i+1}</td>
+      <td style="padding:6pt 8pt;border:1pt solid #ccc">${c.nome} ${c.cognome}</td>
+      <td style="padding:6pt 8pt;border:1pt solid #ccc">${c.azienda}</td>
+      <td style="padding:6pt 8pt;border:1pt solid #ccc">${c.telefono}${c.cellulare ? ' / ' + c.cellulare : ''}</td>
+      <td style="padding:6pt 8pt;border:1pt solid #ccc">${c.mail}</td>
+      <td style="padding:6pt 8pt;border:1pt solid #ccc;font-weight:bold;color:#0055aa">${c.esito}</td>
+      <td style="padding:6pt 8pt;border:1pt solid #ccc">${(c.note||'').replace(/\n/g,'<br>')}</td>
+      <td style="padding:6pt 8pt;border:1pt solid #ccc;font-size:10pt;color:#666">${c.ora}</td>
+    </tr>`).join('');
+  const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head><meta charset="UTF-8">
+<style>
+  body{font-family:Arial,sans-serif;font-size:11pt;color:#111;margin:2cm}
+  h1{font-size:16pt;color:#003366}
+  .sub{color:#555;font-size:10pt;margin-bottom:20pt}
+  table{width:100%;border-collapse:collapse;font-size:10pt}
+  th{background:#003366;color:#fff;padding:7pt 8pt;text-align:left;border:1pt solid #003366}
+</style></head><body>
+<h1>Report Chiamate — CP TECH</h1>
+<p class="sub">Data: ${new Date().toLocaleDateString('it-IT')} &nbsp;|&nbsp; Totale contatti: ${savedContacts.length}</p>
+<table>
+  <tr>
+    <th>#</th><th>Nome Cognome</th><th>Azienda</th><th>Telefono</th><th>Email</th><th>Esito</th><th>Note</th><th>Ora</th>
+  </tr>
   ${rows}
-  </body></html>`;
-  const w = window.open('', '_blank');
-  w.document.write(html);
-  w.document.close();
-  w.focus();
-  setTimeout(() => { w.print(); }, 400);
+</table>
+</body></html>`;
+  const blob = new Blob(['﻿' + html], { type: 'application/msword' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `chiamate_${new Date().toLocaleDateString('it-IT').replace(/\//g,'-')}.doc`;
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 // ── ATTITUDE ──

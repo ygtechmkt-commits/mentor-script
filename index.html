@@ -136,8 +136,16 @@ body.light .tabsBar{background:#fff}
 textarea{width:100%;min-height:152px;background:var(--inputBg);border:1px solid var(--line);border-radius:15px;color:var(--text);padding:13px;font-size:15px;resize:vertical;outline:none}
 textarea:focus{border-color:rgba(41,211,255,.85)}
 .noteActions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
-.saveStatus{color:var(--muted);font-size:12px;line-height:1.35;margin-top:8px}
+.saveStatus{color:var(--green);font-size:12px;font-weight:700;line-height:1.35;margin-top:8px;min-height:16px}
 .path{display:flex;flex-wrap:wrap;gap:6px}
+.contactGrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:4px}
+.contactField{background:var(--inputBg);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:9px 11px;font-size:13px;outline:none;width:100%}
+.contactField:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(41,211,255,.12)}
+.contactField option{background:var(--panel)}
+.btnSave{background:linear-gradient(135deg,#29d3ff,#63e9ff)!important;color:#03111c!important;font-weight:800!important}
+.btnDownload{background:linear-gradient(135deg,#54ffa8,#29ffb0)!important;color:#012a1a!important;font-weight:800!important;font-size:12px}
+.savedRow{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.savedRow span{font-size:13px;color:var(--muted)}
 .crumb{font-size:11px;color:#cbd9eb;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:999px;padding:6px 8px}
 .attitudeOverlay{position:fixed;inset:0;z-index:400;display:none;align-items:center;justify-content:center;background:rgba(4,9,20,.55);backdrop-filter:blur(6px)}
 .attitudePop{display:flex;flex-direction:column;align-items:center;gap:16px;background:#fff;color:#07111f;border-radius:28px;padding:40px 44px;box-shadow:0 32px 100px rgba(0,0,0,.45);animation:popIn .28s cubic-bezier(.22,1,.36,1) both;max-width:min(400px,calc(100vw - 32px));text-align:center}
@@ -402,17 +410,37 @@ body.compact textarea{min-height:105px}
           </div>
         </div>
         <div class="box">
-          <h3>Note chiamata</h3>
-          <textarea id="notes" placeholder="Scrivi qui le note da copiare nel CRM..."></textarea>
-          <div class="noteActions">
-            <button class="smallBtn" onclick="copyNotes()">Copia note</button>
-            <button class="smallBtn" onclick="clearNotes()">Pulisci note</button>
+          <h3>📋 Scheda contatto</h3>
+          <div class="contactGrid">
+            <input class="contactField" id="cf_nome" type="text" placeholder="Nome" />
+            <input class="contactField" id="cf_cognome" type="text" placeholder="Cognome" />
+            <input class="contactField" id="cf_azienda" type="text" placeholder="Azienda" style="grid-column:1/-1" />
+            <input class="contactField" id="cf_telefono" type="tel" placeholder="Telefono" />
+            <input class="contactField" id="cf_cellulare" type="tel" placeholder="Cellulare" />
+            <input class="contactField" id="cf_mail" type="email" placeholder="Email" style="grid-column:1/-1" />
+            <select class="contactField" id="cf_esito" style="grid-column:1/-1">
+              <option value="">— Esito chiamata —</option>
+              <option>Appuntamento fissato</option>
+              <option>Richiamata</option>
+              <option>Non interessato</option>
+              <option>Non raggiunto</option>
+              <option>Filtro – passare al titolare</option>
+              <option>Mail inviata</option>
+            </select>
           </div>
-          <div class="saveStatus" id="saveStatus">Note salvate su questo dispositivo.</div>
+          <h3 style="margin-top:12px">Note chiamata</h3>
+          <textarea id="notes" placeholder="Scrivi qui le note..."></textarea>
+          <div class="noteActions">
+            <button class="smallBtn btnSave" onclick="saveContact()">💾 Salva</button>
+            <button class="smallBtn" onclick="clearContactForm()">Pulisci</button>
+          </div>
+          <div class="saveStatus" id="saveStatus"></div>
         </div>
         <div class="box">
-          <h3>Punto del flusso</h3>
-          <div class="path" id="path"></div>
+          <div class="savedRow">
+            <span>📁 Salvati oggi: <strong id="savedCount">0</strong></span>
+            <button class="smallBtn btnDownload" onclick="downloadPDF()">⬇ Scarica PDF</button>
+          </div>
         </div>
       </aside>
     </div>
@@ -900,7 +928,75 @@ async function copyNotes() {
   catch { document.getElementById('notes').select(); document.execCommand('copy'); }
   document.getElementById('saveStatus').textContent = 'Note copiate. Ora puoi incollarle nel CRM.';
 }
-function clearNotes() { document.getElementById('notes').value = ''; LS.setStr('cptech_notes', ''); document.getElementById('saveStatus').textContent = 'Note pulite.'; }
+function clearNotes() { document.getElementById('notes').value = ''; LS.setStr('cptech_notes', ''); }
+
+// ── SCHEDA CONTATTO ──
+let savedContacts = [];
+
+function saveContact() {
+  const nome = document.getElementById('cf_nome').value.trim();
+  const cognome = document.getElementById('cf_cognome').value.trim();
+  const azienda = document.getElementById('cf_azienda').value.trim();
+  const telefono = document.getElementById('cf_telefono').value.trim();
+  const cellulare = document.getElementById('cf_cellulare').value.trim();
+  const mail = document.getElementById('cf_mail').value.trim();
+  const esito = document.getElementById('cf_esito').value;
+  const note = document.getElementById('notes').value.trim();
+  if (!nome && !cognome && !azienda) { document.getElementById('saveStatus').textContent = 'Inserisci almeno nome o azienda.'; return; }
+  const record = {
+    nome, cognome, azienda, telefono, cellulare, mail, esito, note,
+    commerciale: currentUser?.displayName || currentUser?.email || '',
+    ora: new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }),
+    data: new Date().toLocaleDateString('it-IT')
+  };
+  savedContacts.push(record);
+  document.getElementById('savedCount').textContent = savedContacts.length;
+  document.getElementById('saveStatus').textContent = '✓ Salvato!';
+  setTimeout(() => document.getElementById('saveStatus').textContent = '', 2000);
+  clearContactForm(false);
+}
+
+function clearContactForm(clearStatus = true) {
+  ['cf_nome','cf_cognome','cf_azienda','cf_telefono','cf_cellulare','cf_mail'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('cf_esito').value = '';
+  document.getElementById('notes').value = '';
+  if (clearStatus) document.getElementById('saveStatus').textContent = '';
+}
+
+function downloadPDF() {
+  if (savedContacts.length === 0) { alert('Nessun contatto salvato da scaricare.'); return; }
+  const rows = savedContacts.map((c, i) => `
+    <div class="record">
+      <div class="rec-num">#${i + 1} — ${c.data} ${c.ora} — ${c.commerciale}</div>
+      <table>
+        <tr><td>Nome</td><td>${c.nome} ${c.cognome}</td><td>Azienda</td><td>${c.azienda}</td></tr>
+        <tr><td>Telefono</td><td>${c.telefono}</td><td>Cellulare</td><td>${c.cellulare}</td></tr>
+        <tr><td>Email</td><td colspan="3">${c.mail}</td></tr>
+        <tr><td>Esito</td><td colspan="3"><strong>${c.esito}</strong></td></tr>
+        ${c.note ? `<tr><td>Note</td><td colspan="3">${c.note.replace(/\n/g,'<br>')}</td></tr>` : ''}
+      </table>
+    </div>`).join('');
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Report Chiamate</title>
+  <style>
+    body{font-family:Arial,sans-serif;font-size:13px;color:#111;padding:30px}
+    h1{font-size:20px;margin-bottom:4px}
+    .sub{color:#555;margin-bottom:24px;font-size:12px}
+    .record{border:1px solid #ccc;border-radius:8px;padding:14px;margin-bottom:16px;page-break-inside:avoid}
+    .rec-num{font-weight:bold;color:#0066aa;margin-bottom:8px;font-size:12px}
+    table{width:100%;border-collapse:collapse}
+    td{padding:5px 8px;border-bottom:1px solid #eee;vertical-align:top}
+    td:first-child,td:nth-child(3){color:#555;font-size:11px;width:80px;white-space:nowrap}
+  </style></head><body>
+  <h1>Report Chiamate — CP TECH</h1>
+  <div class="sub">Data: ${new Date().toLocaleDateString('it-IT')} — ${savedContacts.length} contatti</div>
+  ${rows}
+  </body></html>`;
+  const w = window.open('', '_blank');
+  w.document.write(html);
+  w.document.close();
+  w.focus();
+  setTimeout(() => { w.print(); }, 400);
+}
 
 // ── ATTITUDE ──
 function toggleAttitude() { attitudeOn = !attitudeOn; LS.set('cptech_attitude', attitudeOn); updateAttitudeBtn(); attitudeOn ? startAttitude() : stopAttitude(); }

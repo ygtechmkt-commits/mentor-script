@@ -448,7 +448,7 @@ body.compact textarea{min-height:105px}
         <div class="box">
           <div class="savedRow">
             <span>📁 Salvati oggi: <strong id="savedCount">0</strong></span>
-            <button class="smallBtn btnDownload" onclick="downloadPDF()">⬇ Scarica Word</button>
+            <button class="smallBtn btnDownload" onclick="downloadPDF()">⬇ Scarica Excel</button>
           </div>
         </div>
       </aside>
@@ -995,54 +995,17 @@ function clearContactForm(clearStatus = true) {
 
 function downloadPDF() {
   if (savedContacts.length === 0) { alert('Nessun contatto salvato da scaricare.'); return; }
-  const schede = savedContacts.map((c, i) => `
-    <div style="border:1pt solid #003366;border-radius:4pt;padding:14pt 16pt;margin-bottom:18pt;page-break-inside:avoid">
-      <p style="font-size:10pt;color:#003366;font-weight:bold;margin:0 0 10pt 0">
-        CONTATTO #${i+1} &nbsp;·&nbsp; ${c.data} alle ${c.ora} &nbsp;·&nbsp; Commerciale: ${c.commerciale}
-      </p>
-      <table style="width:100%;border-collapse:collapse;font-size:11pt">
-        <tr>
-          <td style="color:#555;width:110pt;padding:4pt 0;vertical-align:top">Nome e Cognome</td>
-          <td style="font-weight:bold;padding:4pt 0">${c.nome} ${c.cognome}</td>
-          <td style="color:#555;width:80pt;padding:4pt 0;vertical-align:top">Azienda</td>
-          <td style="padding:4pt 0">${c.azienda}</td>
-        </tr>
-        <tr>
-          <td style="color:#555;padding:4pt 0;vertical-align:top">Telefono</td>
-          <td style="padding:4pt 0">${c.telefono}</td>
-          <td style="color:#555;padding:4pt 0;vertical-align:top">Cellulare</td>
-          <td style="padding:4pt 0">${c.cellulare}</td>
-        </tr>
-        <tr>
-          <td style="color:#555;padding:4pt 0;vertical-align:top">Email</td>
-          <td colspan="3" style="padding:4pt 0">${c.mail}</td>
-        </tr>
-        <tr>
-          <td style="color:#555;padding:4pt 0;vertical-align:top">Esito</td>
-          <td colspan="3" style="padding:4pt 0;font-weight:bold;color:#003366">${c.esito}</td>
-        </tr>
-        ${c.note ? `<tr>
-          <td style="color:#555;padding:4pt 0;vertical-align:top">Note</td>
-          <td colspan="3" style="padding:4pt 0">${c.note.replace(/\n/g,'<br>')}</td>
-        </tr>` : ''}
-      </table>
-    </div>`).join('');
-  const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
-<head><meta charset="UTF-8">
-<style>
-  body{font-family:Arial,sans-serif;font-size:11pt;color:#111;margin:2cm 2.5cm}
-  h1{font-size:18pt;color:#003366;margin-bottom:4pt}
-  .sub{color:#555;font-size:10pt;margin-bottom:24pt}
-</style></head><body>
-<h1>Report Chiamate — CP TECH</h1>
-<p class="sub">Data: ${new Date().toLocaleDateString('it-IT')} &nbsp;·&nbsp; Totale contatti: ${savedContacts.length}</p>
-${schede}
-</body></html>`;
-  const blob = new Blob(['﻿' + html], { type: 'application/msword' });
+  const esc = v => '"' + String(v || '').replace(/"/g, '""') + '"';
+  const header = ['#','Data','Ora','Commerciale','Nome','Cognome','Azienda','Telefono','Cellulare','Email','Esito','Note'];
+  const rows = savedContacts.map((c, i) =>
+    [i+1, c.data, c.ora, c.commerciale, c.nome, c.cognome, c.azienda, c.telefono, c.cellulare, c.mail, c.esito, c.note].map(esc).join(';')
+  );
+  const csv = '﻿' + [header.map(esc).join(';'), ...rows].join('\r\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `chiamate_${new Date().toLocaleDateString('it-IT').replace(/\//g,'-')}.doc`;
+  a.download = `chiamate_${new Date().toLocaleDateString('it-IT').replace(/\//g,'-')}.csv`;
   a.click();
   URL.revokeObjectURL(url);
 }

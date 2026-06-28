@@ -965,34 +965,48 @@ function clearContactForm(clearStatus = true) {
 
 function downloadPDF() {
   if (savedContacts.length === 0) { alert('Nessun contatto salvato da scaricare.'); return; }
-  const rows = savedContacts.map((c, i) => `
-    <tr>
-      <td style="background:#f0f6ff;font-weight:bold;padding:6pt 8pt;border:1pt solid #ccc">#${i+1}</td>
-      <td style="padding:6pt 8pt;border:1pt solid #ccc">${c.nome} ${c.cognome}</td>
-      <td style="padding:6pt 8pt;border:1pt solid #ccc">${c.azienda}</td>
-      <td style="padding:6pt 8pt;border:1pt solid #ccc">${c.telefono}${c.cellulare ? ' / ' + c.cellulare : ''}</td>
-      <td style="padding:6pt 8pt;border:1pt solid #ccc">${c.mail}</td>
-      <td style="padding:6pt 8pt;border:1pt solid #ccc;font-weight:bold;color:#0055aa">${c.esito}</td>
-      <td style="padding:6pt 8pt;border:1pt solid #ccc">${(c.note||'').replace(/\n/g,'<br>')}</td>
-      <td style="padding:6pt 8pt;border:1pt solid #ccc;font-size:10pt;color:#666">${c.ora}</td>
-    </tr>`).join('');
+  const schede = savedContacts.map((c, i) => `
+    <div style="border:1pt solid #003366;border-radius:4pt;padding:14pt 16pt;margin-bottom:18pt;page-break-inside:avoid">
+      <p style="font-size:10pt;color:#003366;font-weight:bold;margin:0 0 10pt 0">
+        CONTATTO #${i+1} &nbsp;·&nbsp; ${c.data} alle ${c.ora} &nbsp;·&nbsp; Commerciale: ${c.commerciale}
+      </p>
+      <table style="width:100%;border-collapse:collapse;font-size:11pt">
+        <tr>
+          <td style="color:#555;width:110pt;padding:4pt 0;vertical-align:top">Nome e Cognome</td>
+          <td style="font-weight:bold;padding:4pt 0">${c.nome} ${c.cognome}</td>
+          <td style="color:#555;width:80pt;padding:4pt 0;vertical-align:top">Azienda</td>
+          <td style="padding:4pt 0">${c.azienda}</td>
+        </tr>
+        <tr>
+          <td style="color:#555;padding:4pt 0;vertical-align:top">Telefono</td>
+          <td style="padding:4pt 0">${c.telefono}</td>
+          <td style="color:#555;padding:4pt 0;vertical-align:top">Cellulare</td>
+          <td style="padding:4pt 0">${c.cellulare}</td>
+        </tr>
+        <tr>
+          <td style="color:#555;padding:4pt 0;vertical-align:top">Email</td>
+          <td colspan="3" style="padding:4pt 0">${c.mail}</td>
+        </tr>
+        <tr>
+          <td style="color:#555;padding:4pt 0;vertical-align:top">Esito</td>
+          <td colspan="3" style="padding:4pt 0;font-weight:bold;color:#003366">${c.esito}</td>
+        </tr>
+        ${c.note ? `<tr>
+          <td style="color:#555;padding:4pt 0;vertical-align:top">Note</td>
+          <td colspan="3" style="padding:4pt 0">${c.note.replace(/\n/g,'<br>')}</td>
+        </tr>` : ''}
+      </table>
+    </div>`).join('');
   const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
 <head><meta charset="UTF-8">
 <style>
-  body{font-family:Arial,sans-serif;font-size:11pt;color:#111;margin:2cm}
-  h1{font-size:16pt;color:#003366}
-  .sub{color:#555;font-size:10pt;margin-bottom:20pt}
-  table{width:100%;border-collapse:collapse;font-size:10pt}
-  th{background:#003366;color:#fff;padding:7pt 8pt;text-align:left;border:1pt solid #003366}
+  body{font-family:Arial,sans-serif;font-size:11pt;color:#111;margin:2cm 2.5cm}
+  h1{font-size:18pt;color:#003366;margin-bottom:4pt}
+  .sub{color:#555;font-size:10pt;margin-bottom:24pt}
 </style></head><body>
 <h1>Report Chiamate — CP TECH</h1>
-<p class="sub">Data: ${new Date().toLocaleDateString('it-IT')} &nbsp;|&nbsp; Totale contatti: ${savedContacts.length}</p>
-<table>
-  <tr>
-    <th>#</th><th>Nome Cognome</th><th>Azienda</th><th>Telefono</th><th>Email</th><th>Esito</th><th>Note</th><th>Ora</th>
-  </tr>
-  ${rows}
-</table>
+<p class="sub">Data: ${new Date().toLocaleDateString('it-IT')} &nbsp;·&nbsp; Totale contatti: ${savedContacts.length}</p>
+${schede}
 </body></html>`;
   const blob = new Blob(['﻿' + html], { type: 'application/msword' });
   const url = URL.createObjectURL(blob);
